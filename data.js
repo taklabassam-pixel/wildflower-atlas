@@ -38,12 +38,12 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور التزهير الكامل (الزهرة الفراشية الأرجوانية)", 
-                img_path: "images/vicia sativa_st1.jpg", 
+                img_path: "images/vicia_sativa_st1.jpg", 
                 is_primary: true 
             },
             { 
                 stage_name: "طور النمو الخضري وظهور المحاليق المتسلقة وسط الأعشاب", 
-                img_path: "images/vicia sativa_st2.jpg", 
+                img_path: "images/vicia_sativa_st2.jpg", 
                 is_primary: false 
             }
         ]
