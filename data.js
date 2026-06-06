@@ -852,7 +852,7 @@ const flowersData = [
     },
     {
         id: 50, 
-        name_ar: "الخَشْخَاشُ البَرِّيُّ (دَيْدَحَانُ المُرُوجِ Mالـمُنْحَنِي)",
+        name_ar: "الخَشْخَاشُ البَرِّيُّ (دَيْدَحَانُ المُرُوجِ الـمُنْحَنِي)",
         scientific_name: "Papaver rhoeas",
         audio_ar: "audio/arabic/papaver_rhoeas_ar.mp3",
         audio_lat: "audio/latin/papaver_rhoeas_lat.mp3",

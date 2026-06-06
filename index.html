@@ -185,15 +185,17 @@
             display: flex;
             flex-direction: column;
             animation: cardAppear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-
-            /* --- تم زيادة الارتفاع بنسبة 15% تقريباً ليصبح 750px --- */
-            max-height: 950px;         
-            overflow-y: auto;          /* تفعيل التمرير العمودي */
-            min-height: 0;             /* يمنع تمدد العناصر الداخلية بشكل إجباري */
             position: relative;        
-            padding-right: 5px;        
-        }
 
+            /* --- التعديل الجذري لمنع الاختفاء والازدحام --- */
+            max-height: 90vh;          
+            overflow-y: auto;          /* تفعيل التمرير للبطاقة ككل */
+            -webkit-overflow-scrolling: touch; /* لجعل التمرير فائق النعومة على الهواتف */
+            padding: 15px;             /* ترك مساحة تنفس داخلية للعناصر */
+            box-sizing: border-box;
+            padding-bottom: 20px; 
+            box-sizing: border-box;
+        }
         /* --- تخصيص مظهر شريط التمرير ليتناسق مع ألوان الأطلس الدافئة --- */
         .giant-flower-card::-webkit-scrollbar {
             width: 6px; /* عرض نحيف وأنيق */
@@ -238,12 +240,13 @@
         /* تنسيق حاوية الصورة لضمان استقرارها البرمجي الصرف */
         .giant-image-box {
             width: 100%;
-            height: 480px;
+            height: 480px;            /* الارتفاع الافتراضي للشاشات الكبيرة */
             background-color: #f8fafc;
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-shrink: 0;           /* يمنع الحاوية من الانضغاط المشوه */
         }
 
         .giant-image-box img {
@@ -251,6 +254,13 @@
             height: 100%;
             object-fit: contain !important;
             display: block;
+        }
+
+        /* --- الحل السحري لشاشات الهواتف الخلوية --- */
+        @media (max-width: 768px) {
+            .giant-image-box {
+                height: 250px;        /* تقليص الارتفاع على الهاتف لترك مساحة لبقية النصوص والأزرار */
+            }
         }
         /* تنسيق شريط الصور المصغرة لمراحل النمو */
         .stages-thumbnail-bar {
@@ -400,7 +410,8 @@
             gap: 15px;
             margin-top: 15px;
             border-top: 1px solid #f1e9dd;
-            padding-top: 20px;
+            padding-top: 10px;
+            padding-bottom: 10px;
         }
 
         .nav-btn {
