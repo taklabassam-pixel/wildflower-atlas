@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أطلس النباتات والأزهار التفاعلي</title>
+    
+    <link rel="icon" type="image/png" href="atlas_logo.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="atlas_logo.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="atlas_logo.png">
+
+    <link rel="apple-touch-icon" href="atlas_logo.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="atlas_logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="atlas_logo.png">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="أطلس النباتات والأزهار التفاعلي">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --vintage-cream: #fffaf1;
+            --ink-color: #2c3e50;
+            --accent-gold: #8b5e34;
+            --bg-canvas: #f4ede2;
+            --badge-season: #e8f5e9;
+            --badge-season-text: #2e7d32;
+            --badge-env: #e3f2fd;
+            --badge-env-text: #1565c0;
+            --shadow: rgba(0, 0, 0, 0.12);
+        }
+
+        body {
+            background-color: var(--bg-canvas);
+            font-family: 'Amiri', serif;
+            margin: 0;
+            padding: 40px 20px;
+            color: var(--ink-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-logo {
+            width: 240px;
+            height: 240px;
+            margin-bottom: 5px;
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.08));
+        }
+
+        .header-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        header h1 {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 3.2rem;
+            color: var(--accent-gold);
+            margin: 0;
+        }
+
+        header p {
+            font-size: 1.8rem;
+            margin: 0;
+            color: #1a7a2e;
+            font-weight: bold;
+        }
+
+        .atlas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        /* تنسيق الكارت السطحي الرئيسي في الشبكة */
+        .preview-card {
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* تأثير الارتفاع الأنيق عند تحريك الفأرة فوق الكارت */
+        .preview-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+            border-color: #cbd5e1;
+        }
+
+        /* حاوية الصورة السطحية المحددة للارتفاع الآمن */
+        .preview-img-container {
+            width: 100%;
+            height: 220px;
+            background-color: #f8fafc; /* خلفية ناعمة لملء الفراغات الجانبية الناتجة عن الاحتواء الكامل */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* ضبط الصورة السطحية لمنع الـ Crop (القص) وكشف الشعار الدائري فوراً */
+        .preview-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain !important; /* إجبار المتصفح على عرض الصورة كاملة بجميع زواياها وشعارها */
+            transition: transform 0.5s ease;
+        }
+
+        /* حركة تقريب خفيفة وممتعة للصورة عند تحويم الفأرة */
+        .preview-card:hover .preview-img {
+            transform: scale(1.03);
+        }
+
+        /* صندوق العنوان المطور خارج إطار الصورة */
+        .preview-title-container {
+            padding: 14px 12px;
+            background-color: #ffffff;
+            border-top: 1px solid #f1f5f9;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* تنسيق خط النص الموحد للعنوان المستقل */
+        .preview-title-new {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f172a;
+            direction: rtl;
+            margin: 0;
+            padding: 0;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .fullscreen-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(44, 62, 80, 0.75);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .giant-flower-card {
+            background: #fffdfa;
+            border: 3px solid var(--accent-gold);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 650px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+            display: flex;
+            flex-direction: column;
+            animation: cardAppear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;        
+
+            /* --- التعديل الجذري لمنع الاختفاء والازدحام --- */
+            max-height: 90vh;          
+            overflow-y: auto;          /* تفعيل التمرير للبطاقة ككل */
+            -webkit-overflow-scrolling: touch; /* لجعل التمرير فائق النعومة على الهواتف */
+            padding: 15px;             /* ترك مساحة تنفس داخلية للعناصر */
+            box-sizing: border-box;
+            padding-bottom: 20px; 
+            box-sizing: border-box;
+        }
+        /* --- تخصيص مظهر شريط التمرير ليتناسق مع ألوان الأطلس الدافئة --- */
+        .giant-flower-card::-webkit-scrollbar {
+            width: 6px; /* عرض نحيف وأنيق */
+        }
+
+        .giant-flower-card::-webkit-scrollbar-track {
+            background: transparent; /* مجرى شفاف للحفاظ على نظافة التصميم */
+        }
+
+        .giant-flower-card::-webkit-scrollbar-thumb {
+            background: #eae3d5; /* لون متناسق مع الأزرار الجانبية المريحة للعين */
+            border-radius: 10px;
+        }
+
+        .giant-flower-card::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-gold); /* يتحول للون الذهبي العتيق عند مرور الماوس */
+        }
+
+        @keyframes cardAppear {
+            from { transform: scale(0.9) translateY(30px); opacity: 0; }
+            to { transform: scale(1) translateY(0); opacity: 1; }
+        }
+
+        /* الحاوية الكبرى المحيطة بالصورة الرأسية للمؤثرات */
+      /* الكلاس الجديد لتنسيق كابشن الطور أسفل الصورة الكبيرة مباشرة */
+        .giant-stage-caption-new {
+            width: 100%;
+            background-color: #f1f5f9; /* رمادي خفيف جداً يحدد الفاصل التفاعلي عن المحتوى السفل */
+            color: #334155; /* لون نص مريح وقابل للقراءة وعالي التباين */
+            padding: 10px 20px;
+            font-size: 22px;
+            font-weight: 500;
+            text-align: center; /* توسط النص ليعطي اتزاناً بصرياً ممتازاً للواجهة */
+            border-bottom: 1px solid #e2e8f0;
+            direction: rtl;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        /* تنسيق حاوية الصورة لضمان استقرارها البرمجي الصرف */
+        .giant-image-box {
+            width: 100%;
+            height: 480px;            /* الارتفاع الافتراضي للشاشات الكبيرة */
+            background-color: #f8fafc;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;           /* يمنع الحاوية من الانضغاط المشوه */
+        }
+
+        .giant-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain !important;
+            display: block;
+        }
+
+        /* --- الحل السحري لشاشات الهواتف الخلوية --- */
+        @media (max-width: 768px) {
+            .giant-image-box {
+                height: 250px;        /* تقليص الارتفاع على الهاتف لترك مساحة لبقية النصوص والأزرار */
+            }
+        }
+        /* تنسيق شريط الصور المصغرة لمراحل النمو */
+        .stages-thumbnail-bar {
+            display: flex;
+            gap: 12px;
+            padding: 15px 30px 5px 30px;
+            justify-content: center;
+            background: #fffdfa;
+        }
+
+        .stage-thumb {
+            flex: 1;
+            max-width: 100px;
+            text-align: center;
+            cursor: pointer;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            padding: 4px;
+            background: #fbf8f3;
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .stage-thumb img {
+            width: 100%;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .stage-thumb span {
+            display: block;
+            font-size: 0.85rem;
+            margin-top: 4px;
+            color: #6d5137;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* تأثير مرور الماوس الحركي: الاندفاع للأمام والارتفاع للأعلى */
+        .stage-thumb:hover {
+            transform: translateY(-4px) scale(1.07);
+            box-shadow: 0 6px 15px rgba(139, 94, 52, 0.15);
+            border-color: var(--accent-gold);
+        }
+
+        .stage-thumb.active {
+            border-color: #1a7a2e;
+            background: #e8f5e9;
+        }
+
+        .giant-content-box {
+            background-color: #ffffff;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            /* تأمين مساحة كافية ممتدة للأسفل دون تداخل مع الأزرار والنصوص */
+            min-height: 350px; 
+        }
+
+        .giant-header {
+            text-align: center;
+        }
+
+        .giant-header h2 {
+            font-family: 'Aref Ruqaa', serif;
+            color: var(--accent-gold);
+            font-size: 2.1rem;
+            margin: 0 0 5px 0;
+        }
+
+        .giant-scientific {
+            font-style: italic;
+            color: #188209;
+            font-size: 1.8rem;
+            font-family: 'Times New Roman', serif;
+            font-weight: bold;
+        }
+
+        .audio-container {
+            text-align: center;
+        }
+
+        .audio-btn {
+            background-color: transparent;
+            border: 1px dashed var(--accent-gold);
+            color: var(--accent-gold);
+            padding: 8px 22px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Amiri', serif;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .audio-btn:hover {
+            background-color: var(--accent-gold);
+            color: white;
+        }
+
+        .badges-dock {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 5px 0;
+        }
+
+        .color-badge {
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 1.4rem;
+            line-height: 1.4;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .color-badge.season-badge {
+            background-color: var(--badge-season);
+            color: var(--badge-season-text);
+            border-right: 5px solid var(--badge-season-text);
+        }
+
+        .color-badge.env-badge {
+            background-color: var(--badge-env);
+            color: var(--badge-env-text);
+            border-right: 5px solid var(--badge-env-text);
+        }
+
+        .giant-story {
+            font-size: 1.35rem;
+            line-height: 1.6;
+            color: #2c3e50;
+            text-align: justify;
+            margin: 10px 0;
+            border-top: 1px dashed #eedfcb;
+            padding-top: 15px;
+        }
+
+        .giant-nav-dock {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            border-top: 1px solid #f1e9dd;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Amiri', serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+
+        .nav-btn.side-btn {
+            background-color: #eae3d5;
+            color: var(--ink-color);
+        }
+
+        .nav-btn.side-btn:hover {
+            background-color: #dcd3c3;
+        }
+
+        .nav-btn.center-btn {
+            background-color: var(--accent-gold);
+            color: white;
+        }
+
+        .nav-btn.center-btn:hover {
+            background-color: #704b29;
+
+            /* غطاء الشاشة الخلفي المعتم */
+        /* غطاء كامل للشاشة باللون المعتم لتركيز الانتباه على الرسالة */
+        /* تنسيق الغطاء الخلفي العائم */
+        .welcome-modal-overlay {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            background-color: rgba(0, 0, 0, 0.8) !important; /* خلفية معتمة بنسبة 80% لعزل الأطلس مؤقتاً */
+            display: none; /* يتم تحويله لـ flex بواسطة الجافاسكريبت */
+            justify-content: center !important;
+            align-items: center !important;
+            z-index: 999999 !important; /* رقم ضخم جداً ليحجب أي عنصر آخر في الأطلس خلفه */
+            padding: 20px !important;
+            box-sizing: border-box !important;
+        }
+
+        /* تنسيق بطاقة النص */
+        .welcome-modal-card {
+            background-color: #fcfbf7 !important; /* لون بيج ناعم متناسق مع تصميمك */
+            padding: 35px !important;
+            border-radius: 16px !important;
+            max-width: 600px !important;
+            width: 100% !important;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4) !important;
+            text-align: center !important;
+            direction: rtl !important;
+            border: 3px solid #8B5A2B !important; /* إطار بني دافئ */
+        }
+
+        /* تنسيق زر ابدأ الاستكشاف الكبسولي */
+        .welcome-btn {
+            background-color: #2e7d32 !important;
+            color: white !important;
+            border: none !important;
+            padding: 14px 40px !important;
+            font-size: 1.2rem !important;
+            font-weight: bold !important;
+            border-radius: 30px !important;
+            cursor: pointer !important;
+            margin-top: 15px !important;
+            display: inline-block !important;
+            box-shadow: 0 4px 10px rgba(46, 125, 50, 0.3) !important;
+        }
+        .welcome-btn:hover {
+            background-color: #1b5e20 !important;
+        }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-logo">
+            <img src="atlas_logo.png" alt="شعار أطلس الأشجار والنباتات والأزهار البرية">
+        </div>
+
+        <h1>أَطْلَسُ الْأَشْجَارِ، النَّبَاتَاتِ وَالْأَزْهَارِ الْبَرِّيَّةِ التَّفَاعُلِيّ</h1>
+        <p>منحدرات واودية اراضي بلدة العزونية - لبنان</p>
+    </header>
+
+    <div class="atlas-grid" id="previewGrid"></div>
+
+    <div class="fullscreen-overlay" id="fullscreenOverlay" onclick="closeGiantCard()">
+        <div class="giant-flower-card" id="giantCard" onclick="event.stopPropagation()"></div>
+    </div>
+
+     <div id="welcomeModal" class="welcome-modal-overlay">
+        <div class="welcome-modal-card">
+            <h2>أَهْلًا بِكَ</h2>
+            <p id="welcomeText">
+                أَهْلًا بِكَ فِي أَطْلَسِ الْأَشْجَارِ النَّبَاتَاتِ وَالْأَزْهَارِ الْبَرِّيَّةِ التَّفَاعُلِيِّ؛ دَلِيلِكَ الرَّقْمِيِّ الشَّامِلِ لِاسْتِكْشَافِ الثَّرْوَةِ النَّبَاتِيَّةِ مِنْ حَوْلِكَ.<br><br>
+                هَذَا التَّطْبِيقُ مُصَمَّمٌ خَصِيصًا لِمُسَاعَدَتِكَ فِي التَّعَرُّفِ عَلَى الزُّهُورِ وَالْأَعْشَابِ الْبَرِّيَّةِ، وَمَعْرِفَةِ مَوَاسِمِ إِزْهَارِهَا وَبِيئَاتِهَا الطَّبِيعِيَّةِ عَبْرَ وَاجِهَاتٍ تَفَاعُلِيَّةٍ وَمُرِيحَةٍ.<br><br>
+                يُمْكِنُكَ الْآنَ التَّنَقُّلُ بَيْنَ الْبِطَاقَاتِ الَّتِي تَحْتَوِي عَلَى الْمَعْلُومَاتِ وَالصُّوَرِ الْحَيَّةِ للنباتات، وَالِاسْتِمَاعُ لِنُّطْقِ أَسْمَائِها بِاللُّغَتَيْنِ الْعَرَبِيَّةِ وَاللَّاتِينِيَّةِ.<br><br>
+                نَتَمَنَّى لَكَ رِحْلَةَ اسْتِكْشَافٍ مُمْتِعَةً وَمُثْمِرَةً!
+            </p>
+            <button id="closeWelcomeBtn" class="welcome-btn">اِبْدَأْ الِاسْتِكْشَافَ</button>
+        </div>
+    </div>
+    <script src="data.js"></script>
+    <script>
+          document.addEventListener("DOMContentLoaded", () => {
+    console.log("=== [1] تم تحميل الشجرة الهيكلية للـ DOM بنجاح ===");
+
+    const welcomeModal = document.getElementById("welcomeModal");
+    const closeWelcomeBtn = document.getElementById("closeWelcomeBtn");
+
+    // التحقق من وجود العناصر في الشاشة أولاً
+    console.log("=== [2] فحص عناصر الـ HTML ===");
+    console.log("عنصر الـ Modal:", welcomeModal);
+    console.log("عنصر زر الإغلاق:", closeWelcomeBtn);
+
+    // فحص القيمة المخزنة في الذاكرة المحلية
+    const isFirstTime = localStorage.getItem("atlas_first_time");
+    console.log("=== [3] فحص الذاكرة المحلية (localStorage) ===");
+    console.log("قيمة مفتاح atlas_first_time الحالية هي:", isFirstTime);
+
+    // شرط إظهار أو إخفاء النافذة
+    if (!isFirstTime) {
+        console.log("=== [4] النتيجة: المستخدم يدخل لأول مرة (أو تم تصفير الذاكرة). محاولة إظهار النافذة... ===");
+        if (welcomeModal) {
+            welcomeModal.style.display = "flex";
+            console.log("تم تغيير style.display إلى flex بنجاح للنافذة الترحيبية.");
+        } else {
+            console.error("خطأ: لم يتم العثور على welcomeModal في الـ HTML لإظهاره!");
+        }
+    } else {
+        console.log("=== [4] النتيجة: المستخدم قديم، الكود يأمر بإخفاء النافذة تلقائياً ===");
+        if (welcomeModal) {
+            welcomeModal.style.display = "none";
+        }
+    }
+
+    // مراقبة حدث الضغط على الزر
+    if (closeWelcomeBtn) {
+        console.log("=== [5] تم ربط مستمع الأحداث (Event Listener) بنجاح لزر الاستكشاف ===");
+        
+        closeWelcomeBtn.addEventListener("click", (e) => {
+            console.log("🎯 [حدث] تم الضغط الفعلي الآن على زر 'ابدأ الاستكشاف'!");
+            
+            // للأمان ومنع أي سلوك مباغت من المتصفح (مثل عمل Refresh)
+            e.preventDefault(); 
+            console.log("تم إيقاف السلوك الافتراضي للزر بنجاح عبر preventDefault.");
+
+            if (welcomeModal) {
+                welcomeModal.style.display = "none";
+                console.log("تم إخفاء النافذة برمجياً الآن: display = none");
+            }
+
+            localStorage.setItem("atlas_first_time", "done");
+            console.log("تم حفظ القيمة 'done' في الـ localStorage لمنع ظهورها مجدداً.");
+        });
+    } else {
+        console.warn("تنبيه: زر closeWelcomeBtn غير موجود، لم يتم ربط حدث الضغط!");
+    }
+});
+        
+        const previewGrid = document.getElementById('previewGrid');
+        const fullscreenOverlay = document.getElementById('fullscreenOverlay');
+        const giantCard = document.getElementById('giantCard');
+
+       // =========================================================================
+// 1. بناء الشبكة السطحية للتصفح التلقائي المتجاوب مع نوعي الصورة والمراحل
+// =========================================================================
+// =========================================================================
+// بناء الشبكة السطحية للتصفح التلقائي المحدثة - كشف الشعار وفصل العناوين
+// =========================================================================
+function buildGrid() {
+    previewGrid.innerHTML = flowersData.map((flower, index) => {
+        // تحديد صورة الغلاف: إما حقل image التقليدي أو الصورة الأساسية داخل مصفوفة المراحل
+        let coverImage = flower.image;
+        if (flower.growth_stages && flower.growth_stages.length > 0) {
+            const primary = flower.growth_stages.find(s => s.is_primary) || flower.growth_stages[0];
+            coverImage = primary.img_path;
+        }
+
+        // إرجاع هيكل الكارت السطحي المطور (تمت إزالة العناوين الملتصقة فوق الصورة)
+        return `
+            <div class="preview-card" onclick="openGiantCard(${index})" style="display: flex; flex-direction: column; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); border: 1px solid #f1f5f9; transition: all 0.3s ease;">
+                
+                <div class="preview-img-container" style="width: 100%; height: 220px; background-color: #f8fafc; display: flex; justify-content: center; align-items: center; overflow: hidden; position: relative;">
+                    <img class="preview-img" src="${coverImage}" alt="${flower.name_ar}" loading="lazy" 
+                         style="width: 100%; height: 100%; object-fit: contain; display: block;">
+                </div>
+                
+                <div class="preview-title-container" style="padding: 12px 16px; background-color: #ffffff; border-top: 1px solid #f1f5f9; text-align: center;">
+                    <div class="preview-title-new" style="font-size: 16px; font-weight: bold; color: #1e293b; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; direction: rtl;">
+                        ${flower.name_ar}
+                    </div>
+                </div>
+                
+            </div>
+        `;
+    }).join('');
+}
+
+// =========================================================================
+// 2. فتح الكارت العملاق التفاعلي المتكيف ذكياً مع مراحل النمو والملفات الصوتية المرفوعة
+// =========================================================================
+// =========================================================================
+// دالة فتح الكارت العملاق التفاعلي المحدثة - متوافقة مع نظام تشغيل الـ MP3 الحصري
+// =========================================================================
+function openGiantCard(index) {
+    const flower = flowersData[index];
+    if (!flower) return;
+
+    let imageBoxHTML = '';
+    let stagesBarHTML = '';
+
+    // الفحص الذكي: هل تحتوي النبتة على مراحل نمو متعددة؟
+    if (flower.growth_stages && flower.growth_stages.length > 0) {
+        const primary = flower.growth_stages.find(s => s.is_primary) || flower.growth_stages[0];
+        
+        // 1. هيكل حاوية الصورة الكبيرة (بدون أي اقتصاص أو حجب للشعار المطبوع)
+        imageBoxHTML = `
+            <div class="giant-image-box" style="background-color: #f8fafc; display: flex; justify-content: center; align-items: center; overflow: hidden; width: 100%; height: 480px;">
+                <img id="giant-main-img" src="${primary.img_path}" alt="${flower.name_ar}" 
+                     style="width: 100%; height: 100%; object-fit: contain; display: block;">
+            </div>
+            
+            <div id="giant-stage-caption" class="giant-stage-caption-new">
+                <i class="fa-solid fa-leaf" style="margin-left: 6px; color: #10b981;"></i>
+                <span>مرحلة النمو الحالية: <strong>${primary.stage_name}</strong></span>
+            </div>
+        `;
+
+        // 2. بناء شريط الصور المصغرة السفلي التفاعلي للأطوار النباتية
+        stagesBarHTML = `<div class="stages-thumbnail-bar" style="background-color: #ffffff; border-bottom: 1px solid #f1f5f9; padding-top: 5px;">`;
+        flower.growth_stages.forEach(stage => {
+            const isActive = stage.img_path === primary.img_path ? 'active' : '';
+            stagesBarHTML += `
+                <div class="stage-thumb ${isActive}" onclick="switchGiantStage('${stage.img_path}', '${stage.stage_name}', this)">
+                    <img src="${stage.img_path}" alt="${stage.stage_name}" style="width: 100%; height: 100%; object-fit: cover;">
+                    <span>${stage.stage_name.split(' ')[0]}</span>
+                </div>
+            `;
+        });
+        stagesBarHTML += `</div>`;
+
+    } else {
+        // الحالة المستقرة الموحدة في حال عدم توفر أطوار نمو متعددة للنبتة
+        imageBoxHTML = `
+            <div class="giant-image-box" style="background-color: #f8fafc; display: flex; justify-content: center; align-items: center; overflow: hidden; width: 100%; height: 480px; border-bottom: 1px solid #f1f5f9;">
+                <img src="${flower.image}" alt="${flower.name_ar}" 
+                     style="width: 100%; height: 100%; object-fit: contain; display: block;">
+            </div>
+        `;
+        stagesBarHTML = ''; 
+    }
+
+    // حقن البنية الهيكلية الكاملة داخل الكارت العملاق مع تصحيح ربط الأزرار بالدالة الجديدة
+    giantCard.innerHTML = `
+        ${imageBoxHTML}
+        ${stagesBarHTML}
+        <div class="giant-content-box">
+            <div class="giant-header">
+                <h2>${flower.name_ar}</h2>
+                <div class="giant-scientific">${flower.scientific_name}</div>
+            </div>
+            
+            <div class="audio-container" style="display: flex; flex-direction: row; gap: 12px; margin-bottom: 25px; width: 100%;">
+                
+                <button class="audio-btn" 
+                        onclick="speakSingleAudio('${flower.audio_ar}')" 
+                        style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; background-color: #10b981; color: #ffffff; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; transition: all 0.2s;"
+                        onmouseover="this.style.backgroundColor='#059669'" 
+                        onmouseout="this.style.backgroundColor='#10b981'">
+                    <i class="fa-solid fa-volume-high"></i> 
+                    <span>الاسم بالعربية</span>
+                </button>
+                
+                <button class="audio-btn" 
+                        onclick="speakSingleAudio('${flower.audio_lat}')" 
+                        style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; background-color: #3b82f6; color: #ffffff; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; transition: all 0.2s;"
+                        onmouseover="this.style.backgroundColor='#2563eb'" 
+                        onmouseout="this.style.backgroundColor='#3b82f6'">
+                    <i class="fa-solid fa-volume-high"></i> 
+                    <span>الاسم باللاتينية</span>
+                </button>
+
+            </div>
+            <div class="badges-dock">
+                <div class="color-badge season-badge">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <div><strong>مَوْسِمُ الإِزْهَار:</strong> ${flower.season}</div>
+                </div>
+                <div class="color-badge env-badge">
+                    <i class="fa-solid fa-mountain-sun"></i>
+                    <div><strong>البِيئَةُ الطبيعية:</strong> ${flower.environment}</div>
+                </div>
+            </div>
+            <p class="giant-story">${flower.story}</p>
+            <div class="giant-nav-dock">
+                <button class="nav-btn side-btn" onclick="navigateGiant(${index - 1})">
+                    <i class="fa-solid fa-arrow-right"></i> السابق
+                </button>
+                <button class="nav-btn center-btn" onclick="closeGiantCard()">
+                    <i class="fa-solid fa-table-cells"></i> الشبكة الرئيسية
+                </button>
+                <button class="nav-btn side-btn" onclick="navigateGiant(${index + 1})">
+                    التالي <i class="fa-solid fa-arrow-left"></i>
+                </button>
+            </div>
+        </div>
+
+    `;
+    
+    fullscreenOverlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+// دالة تبديل مراحل النمو المصغرة المحدثة لتحديث شريط النص المستقل بسلاسة
+function switchGiantStage(imgUrl, stageName, element) {
+    const mainImg = document.getElementById('giant-main-img');
+    const caption = document.getElementById('giant-stage-caption');
+    
+    if (mainImg) mainImg.src = imgUrl;
+    
+    if (caption) {
+        caption.innerHTML = `
+            <i class="fa-solid fa-leaf" style="margin-left: 6px; color: #10b981;"></i>
+            <span>مرحلة النمو الحالية: <strong>${stageName}</strong></span>
+        `;
+    }
+    
+    // تحديث تأثير كلاس النشاط active الدائري في شريط المصغرات
+    const siblings = element.parentElement.getElementsByClassName('stage-thumb');
+    for (let sibling of siblings) {
+        sibling.classList.remove('active');
+    }
+    element.classList.add('active');
+}
+
+// =========================================================================
+// 3. دالة تبديل مراحل النمو داخل الكارت المفتوح فورياً بسلاسة
+// =========================================================================
+// دالة تبديل مراحل النمو المحدثة لتتوافق مع الهيكل الجديد تحت الصورة
+function switchGiantStage(imgUrl, stageName, element) {
+    const mainImg = document.getElementById('giant-main-img');
+    const caption = document.getElementById('giant-stage-caption');
+    
+    if (mainImg) mainImg.src = imgUrl;
+    
+    // تحديث النص الداخلي بذكاء مع الحفاظ على الأيقونة الجمالية
+    if (caption) {
+        caption.innerHTML = `
+            <i class="fa-solid fa-leaf" style="margin-left: 6px; color: #10b981;"></i>
+            <span>مرحلة النمو الحالية: <strong>${stageName}</strong></span>
+        `;
+    }
+    
+    // تحديث كلاس النشاط active في شريط المصغرات
+    const siblings = element.parentElement.getElementsByClassName('stage-thumb');
+    for (let sibling of siblings) {
+        sibling.classList.remove('active');
+    }
+    element.classList.add('active');
+}
+
+// =========================================================================
+// 4. إغلاق الكارت العملاق وإيقاف كافة التشغيلات الصوتية (ملفات أو محرك آلي)
+// =========================================================================
+function closeGiantCard() {
+    fullscreenOverlay.style.display = 'none';
+    document.body.style.overflow = 'auto';
+    
+    // إلغاء نطق محرك المتصفح
+    window.speechSynthesis.cancel();
+    
+    // إيقاف ملف الـ MP3 المشغل إن وجد
+    if (currentAudioPlayback) {
+        currentAudioPlayback.pause();
+        currentAudioPlayback.currentTime = 0;
+        currentAudioPlayback = null;
+    }
+}
+
+function navigateGiant(nextIndex) {
+    if (nextIndex < 0 || nextIndex >= flowersData.length) return;
+    // إيقاف الصوت الحالي قبل الانتقال لنبتة أخرى لمنع تداخل الأصوات
+    if (currentAudioPlayback) {
+        currentAudioPlayback.pause();
+        currentAudioPlayback.currentTime = 0;
+        currentAudioPlayback = null;
+    }
+    openGiantCard(nextIndex);
+}
+
+// =========================================================================
+// 5. متغير عام مضاف لإدارة الملفات الصوتية البشرية المشغلة وحظر تداخلها
+// =========================================================================
+// متغير عام للاحتفاظ بكائن الصوت المشغل حالياً لمنع تداخل الأصوات عند التنقل السريع أو الضغط المتكرر
+let currentAudioPlayback = null;
+
+// =========================================================================
+// دالة النطق الرئيسية المحدثة - تشغيل ملفات MP3 البشرية فقط وحصرياً
+// =========================================================================
+function speakSingleAudio(audioPath) {
+    
+    // 1. إسكات وإيقاف أي ملف صوتی يعمل حالياً فوراً وإعادة ضبط مؤشر الوقت الصوتي إلى الصفر
+    if (currentAudioPlayback) {
+        currentAudioPlayback.pause();
+        currentAudioPlayback.currentTime = 0;
+        currentAudioPlayback = null;
+    }
+
+    // 2. فحص صرامة المسار: التأكد من أن المسار مرسل، وليس نصاً فارغاً أو معرفاً خاطئاً
+    if (audioPath && audioPath.trim() !== "" && audioPath !== "undefined") {
+        
+        // إنشاء كائن تشغيل الصوت المباشر للمتصفح بالاعتماد على مسار ملف الـ MP3 الخاص بك
+        currentAudioPlayback = new Audio(audioPath);
+        
+        // بدء تشغيل الملف مع التقاط ومعالجة أي خطأ في التحميل (مثل خطأ 404)
+        currentAudioPlayback.play().then(() => {
+            console.log(`تم تشغيل الملف الصوتي بنجاح من المسار المعتمد: ${audioPath}`);
+        }).catch(error => {
+            console.error(`خطأ برميجي أو ملف مفقود (404 Not Found) في المسار التالـي: ${audioPath}`, error);
+        });
+        
+    } else {
+        console.warn("تنبيه برميجي: لم يتم العثور على مسار لملف MP3 مسجل لهذه النبتة في قاعدة البيانات.");
+    }
+}
+
+// =========================================================================
+// تعديل الدوال المرتبطة لإيقاف تشغيل ملف الـ MP3 فوراً عند التفاعل
+// =========================================================================
+
+/**
+ * دالة الانتقال المحدثة لقطع الصوت البشري فوراً عند الانتقال لنبتة أخرى
+ */
+function navigateGiant(nextIndex) {
+    if (nextIndex < 0 || nextIndex >= flowersData.length) return;
+    
+    if (currentAudioPlayback) {
+        currentAudioPlayback.pause();
+        currentAudioPlayback.currentTime = 0;
+        currentAudioPlayback = null;
+    }
+    openGiantCard(nextIndex);
+}
+
+/**
+ * دالة إغلاق الكارت المحدثة لقطع تشغيل ملف الـ MP3 فور العودة للشبكة الرئيسية
+ */
+function closeGiantCard() {
+    fullscreenOverlay.style.display = 'none';
+    document.body.style.overflow = 'auto';
+    
+    if (currentAudioPlayback) {
+        currentAudioPlayback.pause();
+        currentAudioPlayback.currentTime = 0;
+        currentAudioPlayback = null;
+    }
+}
+       window.onload = buildGrid;
+    </script>
+</body>
+</html>
