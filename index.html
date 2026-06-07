@@ -446,6 +446,55 @@
 
         .nav-btn.center-btn:hover {
             background-color: #704b29;
+
+            /* غطاء الشاشة الخلفي المعتم */
+        /* غطاء كامل للشاشة باللون المعتم لتركيز الانتباه على الرسالة */
+        /* تنسيق الغطاء الخلفي العائم */
+        .welcome-modal-overlay {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            background-color: rgba(0, 0, 0, 0.8) !important; /* خلفية معتمة بنسبة 80% لعزل الأطلس مؤقتاً */
+            display: none; /* يتم تحويله لـ flex بواسطة الجافاسكريبت */
+            justify-content: center !important;
+            align-items: center !important;
+            z-index: 999999 !important; /* رقم ضخم جداً ليحجب أي عنصر آخر في الأطلس خلفه */
+            padding: 20px !important;
+            box-sizing: border-box !important;
+        }
+
+        /* تنسيق بطاقة النص */
+        .welcome-modal-card {
+            background-color: #fcfbf7 !important; /* لون بيج ناعم متناسق مع تصميمك */
+            padding: 35px !important;
+            border-radius: 16px !important;
+            max-width: 600px !important;
+            width: 100% !important;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4) !important;
+            text-align: center !important;
+            direction: rtl !important;
+            border: 3px solid #8B5A2B !important; /* إطار بني دافئ */
+        }
+
+        /* تنسيق زر ابدأ الاستكشاف الكبسولي */
+        .welcome-btn {
+            background-color: #2e7d32 !important;
+            color: white !important;
+            border: none !important;
+            padding: 14px 40px !important;
+            font-size: 1.2rem !important;
+            font-weight: bold !important;
+            border-radius: 30px !important;
+            cursor: pointer !important;
+            margin-top: 15px !important;
+            display: inline-block !important;
+            box-shadow: 0 4px 10px rgba(46, 125, 50, 0.3) !important;
+        }
+        .welcome-btn:hover {
+            background-color: #1b5e20 !important;
+        }
         }
     </style>
 </head>
@@ -466,8 +515,76 @@
         <div class="giant-flower-card" id="giantCard" onclick="event.stopPropagation()"></div>
     </div>
 
+     <div id="welcomeModal" class="welcome-modal-overlay">
+        <div class="welcome-modal-card">
+            <h2>أَهْلًا بِكَ</h2>
+            <p id="welcomeText">
+                أَهْلًا بِكَ فِي أَطْلَسِ الْأَشْجَارِ النَّبَاتَاتِ وَالْأَزْهَارِ الْبَرِّيَّةِ التَّفَاعُلِيِّ؛ دَلِيلِكَ الرَّقْمِيِّ الشَّامِلِ لِاسْتِكْشَافِ الثَّرْوَةِ النَّبَاتِيَّةِ مِنْ حَوْلِكَ.<br><br>
+                هَذَا التَّطْبِيقُ مُصَمَّمٌ خَصِيصًا لِمُسَاعَدَتِكَ فِي التَّعَرُّفِ عَلَى الزُّهُورِ وَالْأَعْشَابِ الْبَرِّيَّةِ، وَمَعْرِفَةِ مَوَاسِمِ إِزْهَارِهَا وَبِيئَاتِهَا الطَّبِيعِيَّةِ عَبْرَ وَاجِهَاتٍ تَفَاعُلِيَّةٍ وَمُرِيحَةٍ.<br><br>
+                يُمْكِنُكَ الْآنَ التَّنَقُّلُ بَيْنَ الْبِطَاقَاتِ الَّتِي تَحْتَوِي عَلَى الْمَعْلُومَاتِ وَالصُّوَرِ الْحَيَّةِ للنباتات، وَالِاسْتِمَاعُ لِنُّطْقِ أَسْمَائِها بِاللُّغَتَيْنِ الْعَرَبِيَّةِ وَاللَّاتِينِيَّةِ.<br><br>
+                نَتَمَنَّى لَكَ رِحْلَةَ اسْتِكْشَافٍ مُمْتِعَةً وَمُثْمِرَةً!
+            </p>
+            <button id="closeWelcomeBtn" class="welcome-btn">اِبْدَأْ الِاسْتِكْشَافَ</button>
+        </div>
+    </div>
     <script src="data.js"></script>
     <script>
+          document.addEventListener("DOMContentLoaded", () => {
+    console.log("=== [1] تم تحميل الشجرة الهيكلية للـ DOM بنجاح ===");
+
+    const welcomeModal = document.getElementById("welcomeModal");
+    const closeWelcomeBtn = document.getElementById("closeWelcomeBtn");
+
+    // التحقق من وجود العناصر في الشاشة أولاً
+    console.log("=== [2] فحص عناصر الـ HTML ===");
+    console.log("عنصر الـ Modal:", welcomeModal);
+    console.log("عنصر زر الإغلاق:", closeWelcomeBtn);
+
+    // فحص القيمة المخزنة في الذاكرة المحلية
+    const isFirstTime = localStorage.getItem("atlas_first_time");
+    console.log("=== [3] فحص الذاكرة المحلية (localStorage) ===");
+    console.log("قيمة مفتاح atlas_first_time الحالية هي:", isFirstTime);
+
+    // شرط إظهار أو إخفاء النافذة
+    if (!isFirstTime) {
+        console.log("=== [4] النتيجة: المستخدم يدخل لأول مرة (أو تم تصفير الذاكرة). محاولة إظهار النافذة... ===");
+        if (welcomeModal) {
+            welcomeModal.style.display = "flex";
+            console.log("تم تغيير style.display إلى flex بنجاح للنافذة الترحيبية.");
+        } else {
+            console.error("خطأ: لم يتم العثور على welcomeModal في الـ HTML لإظهاره!");
+        }
+    } else {
+        console.log("=== [4] النتيجة: المستخدم قديم، الكود يأمر بإخفاء النافذة تلقائياً ===");
+        if (welcomeModal) {
+            welcomeModal.style.display = "none";
+        }
+    }
+
+    // مراقبة حدث الضغط على الزر
+    if (closeWelcomeBtn) {
+        console.log("=== [5] تم ربط مستمع الأحداث (Event Listener) بنجاح لزر الاستكشاف ===");
+        
+        closeWelcomeBtn.addEventListener("click", (e) => {
+            console.log("🎯 [حدث] تم الضغط الفعلي الآن على زر 'ابدأ الاستكشاف'!");
+            
+            // للأمان ومنع أي سلوك مباغت من المتصفح (مثل عمل Refresh)
+            e.preventDefault(); 
+            console.log("تم إيقاف السلوك الافتراضي للزر بنجاح عبر preventDefault.");
+
+            if (welcomeModal) {
+                welcomeModal.style.display = "none";
+                console.log("تم إخفاء النافذة برمجياً الآن: display = none");
+            }
+
+            localStorage.setItem("atlas_first_time", "done");
+            console.log("تم حفظ القيمة 'done' في الـ localStorage لمنع ظهورها مجدداً.");
+        });
+    } else {
+        console.warn("تنبيه: زر closeWelcomeBtn غير موجود، لم يتم ربط حدث الضغط!");
+    }
+});
+        
         const previewGrid = document.getElementById('previewGrid');
         const fullscreenOverlay = document.getElementById('fullscreenOverlay');
         const giantCard = document.getElementById('giantCard');
@@ -615,6 +732,7 @@ function openGiantCard(index) {
                 </button>
             </div>
         </div>
+
     `;
     
     fullscreenOverlay.style.display = 'flex';
