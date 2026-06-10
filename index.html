@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" direction="rtl">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,17 +58,18 @@
             min-height: 160px;
             margin-bottom: 25px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            position: relative;
         }
 
-        /* تنسيق زر البدء الأولي الكبير لفك حظر الصوت */
         .start-interaction-btn {
             background-color: #2e7d32;
             color: white;
             border: none;
             padding: 15px 40px;
-            font-size: 1.7rem;
+            font-size: 1.6rem;
             font-weight: bold;
             border-radius: 30px;
             cursor: pointer;
@@ -90,19 +91,29 @@
 
         .welcome-card p {
             color: #2c3e50;
-            font-size: 1.7rem;
+            font-size: 1.5rem;
             line-height: 1.9;
-            text-align: justify;
             margin: 0;
             white-space: pre-line;
-            display: none; /* مخفي حتى يضغط المستخدم على زر البدء */
+            display: none; 
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            direction: rtl;
+            text-align: justify;
+        }
+
+        /* كلاس التلاشي والصعود المتناسق */
+        .welcome-card p.fade-out-line {
+            opacity: 0;
+            transform: translateY(-20px);
         }
 
         .cursor {
             display: none;
             width: 3px;
             background-color: #2e7d32;
-            margin-right: 3px;
+            margin-right: 5px;
             animation: blink 0.7s infinite;
         }
 
@@ -112,7 +123,6 @@
             100% { opacity: 0; }
         }
 
-        /* زر "اذهب إلى الأطلس" النهائي */
         .welcome-btn {
             background-color: #7f8c8d;
             color: white;
@@ -128,7 +138,7 @@
         }
 
         .welcome-btn.active {
-            background-color: #8B5A2B; /* يتحول للون الخشبي عند الجاهزية */
+            background-color: #8B5A2B; 
             color: white;
             cursor: pointer;
             opacity: 1;
@@ -146,17 +156,16 @@
         <div class="welcome-card">
             <img src="atlas_logo.png" alt="شعار أطلس العزونية" class="welcome-logo">
             
-            <h2>أهْلًا بِكَ فِي
-                أَطْلَسِ الْأَشْجَارِ، النَّبَاتَاتِ وَالْأَزْهَارِ الْبَرِّيَّةِ التَّفَاعُلِيِّ</h2>
+            <h2>أهْلًا بِكَ فِي أَطْلَسِ الْأَشْجَارِ، النَّبَاتَاتِ وَالْأَزْهَارِ الْبَرِّيَّةِ التَّفَاعُلِيِّ</h2>
             
             <div class="dynamic-text-container">
-                <button id="startTriggerBtn" class="start-interaction-btn">اضغط هنا لنبدء</button>
+                <button id="startTriggerBtn" class="start-interaction-btn">اضغط هنا لنبدأ العرض ➔</button>
                 
                 <p id="welcomeText"></p>
                 <span id="typingCursor" class="cursor">|</span>
             </div>
             
-            <button id="closeWelcomeBtn" class="welcome-btn">تَخَطِّي وَدُخُولُ الْأَطْلَسِ</button>
+            <button id="closeWelcomeBtn" class="welcome-btn">تَخَطِّي وَدُخُولُ الْأَطْلَسِ</button>
         </div>
     </div>
 
@@ -165,51 +174,42 @@
             const welcomeTextElement = document.getElementById("welcomeText");
             const closeWelcomeBtn = document.getElementById("closeWelcomeBtn");
             const typingCursor = document.getElementById("typingCursor");
-            const langBox = document.getElementById("langBox");
-            
-            const btnAr = document.getElementById("btnAr");
-            const btnFr = document.getElementById("btnFr");
+            const startTriggerBtn = document.getElementById("startTriggerBtn");
 
-            // نصوص اللغات مقسمة إلى مصفوفات (كل عنصر يمثل فقرة ستختفي قبل ظهور التالية)
+            // نصوص العرض باللغة العربية فقط (مع تصحيح "الثروة")
             const welcom_txt_ar_paragraphs = [
-                `أَهْلًا بِكَ فِي أَطْلَسِ الْأَشْجَارِ، النَّبَاتَاتِ وَالْأَزْهَارِ الْبَرِّيَّةِ التَّفَاعُلِيِّ؛ دَلِيلِكَ الرَّقْمِيِّ الشَّامِلِ لِاسْتِكْشَافِ الثَّرْوزةِ النَّبَاتِيَّةِ مِنْ حَوْلِكَ.`,
+                `أَهْلًا بِكَ فِي أَطْلَسِ الْأَشْجَارِ، النَّبَاتَاتِ وَالْأَزْهَارِ الْبَرِّيَّةِ التَّفَاعُلِيِّ؛ دَلِيلِكَ الرَّقْمِيِّ الشَّامِلِ لِاسْتِكْشَافِ الثَّرْوَةِ النَّبَاتِيَّةِ مِنْ حَوْلِكَ.`,
                 `هَذَا التَّطْبِيقُ مُصَمَّمٌ خَصِيصًا لِمُسَاعَدَتِكَ فِي التَّعَرُّفِ عَلَى الزُّهُورِ وَالْأَعْشَابِ الْبَرِّيَّةِ، وَمَعْرِفَةِ مَوَاسِمِ إِزْهَارِهَا وَبِيئَاتِهَا الطَّبِيعِيَّةِ عَبْرَ وَاجِهَاتٍ تَفَاعُلِيَّةٍ وَمُرِيحَةٍ.`,
                 `يُمْكِنُكَ الْآنَ التَّنَقُّلُ بَيْنَ الْبِطَاقَاتِ الَّتِي تَحْتَوِي عَلَى الْمَعْلُومَاتِ وَالصُّوَرِ الْحَيَّةِ للنباتات، وَالِاسْتِمَاعُ لِنُّطْقِ أَسْمَائِها بِاللُّغَتَيْنِ الْعَرَبِيَّةِ وَاللَّاتِينِيَّةِ.`,
                 `نَتَمَنَّى لَكَ رِحْلَةَ اسْتِكْشَافٍ مُمْتِعَةً وَمُثْمِرَةً!`
             ];
 
-            const welcome_txt_fr_paragraphs = [
-                `Bienvenue dans l'Atlas Interactif des Arbres, des Plantes et des Fleurs Sauvages ; votre guide numérique exhaustif pour explorer la richesse de la flore qui vous entoure.`,
-                `Cette application a été spécialement conçue pour vous accompagner dans l'identification des fleurs et des herbes sauvages, ainsi que dans la découverte de leurs périodes de floraison et de leurs habitats naturels, le tout à travers des interfaces interactives et ergonomiques.`,
-                `Vous pouvez désormais naviguer entre les différentes fiches descriptives enrichies d'informations et d'illustrations vivantes de la flore, et écouter la prononciation audio de leurs noms en langues arabe et latine.`,
-                `Nous vous souhaitons un voyage d'exploration scientifique agréable et fructueux !`
-            ];
-
-            let selectedParagraphs = [];
             let paragraphIndex = 0;
             let charIndex = 0;
             let currentAudio = null;
-            let totalLength = 0;
+            
+            // حساب الطول الإجمالي للنصوص لضبط تزامن السرعة
+            const totalLength = welcom_txt_ar_paragraphs.reduce((acc, p) => acc + p.length, 0);
 
-            // دالة محاكاة الكتابة التتابعية لفقرة واحدة ثم مسحها والانتقال للمقبلة
             function typeWriter() {
-                if (paragraphIndex < selectedParagraphs.length) {
-                    let currentParagraphText = selectedParagraphs[paragraphIndex];
+                if (paragraphIndex < welcom_txt_ar_paragraphs.length) {
+                    let currentParagraphText = welcom_txt_ar_paragraphs[paragraphIndex];
                     
                     if (charIndex < currentParagraphText.length) {
                         welcomeTextElement.textContent += currentParagraphText.charAt(charIndex);
                         charIndex++;
                         
-                        // احتساب سرعة الكتابة بناءً على الطول الإجمالي للنصوص لكي تتناسق مع الـ 30 ثانية للصوت
+                        // احتساب السرعة لتتطابق حركة الكتابة تلقائياً مع مدة الـ 30 ثانية للصوت
                         const typingSpeed = (30 * 1000) / totalLength;
                         setTimeout(typeWriter, typingSpeed);
                     } else {
-                        // عند انتهاء كتابة الفقرة الحالية: الانتظار قليلاً ثم تلاشيها وصعودها للأعلى لتهيئة المكان للجديدة
+                        // عند اكتمال كتابة السطر الحالي
                         setTimeout(() => {
-                            if (paragraphIndex < selectedParagraphs.length - 1) {
+                            if (paragraphIndex < welcom_txt_ar_paragraphs.length - 1) {
+                                // إضافة تأثير التلاشي والصعود للأعلى
                                 welcomeTextElement.classList.add('fade-out-line');
                                 
-                                // بعد انتهاء تأثير الـ CSS Transition (600ms) نقوم بتفريغ النص وبدء الفقرة التالية
+                                // الانتظار حتى ينتهي تأثير الـ CSS ثم مسح النص والبدء في السطر التالي
                                 setTimeout(() => {
                                     welcomeTextElement.textContent = "";
                                     welcomeTextElement.classList.remove('fade-out-line');
@@ -218,49 +218,37 @@
                                     typeWriter();
                                 }, 600);
                             } else {
-                                // إذا كانت هذه آخر فقرة، يتم إخفاء مؤشر الكتابة وتفعيل الزر بشكل نهائي
+                                // عند الوصول للسطر الأخير والنهائي
                                 typingCursor.style.display = 'none';
                                 activateNavigationButton();
                             }
-                        }, 2500); // بقاء الفقرة مقروءة على الشاشة لمدة ثانيتين ونصف قبل الانتقال
+                        }, 2500); // بقاء السطر مقروءاً لمدة ثانيتين ونصف قبل الانتقال
                     }
                 }
             }
 
             function activateNavigationButton() {
                 closeWelcomeBtn.classList.add('active');
-                closeWelcomeBtn.textContent = localStorage.getItem("atlas_lang") === "fr" ? "Commencer l'exploration ➔" : "اِبْدَأْ الِاسْتِكْشَافَ ➔";
+                closeWelcomeBtn.textContent = "اِبْدَأْ الِاسْتِكْشَافَ ➔";
             }
 
-            function startWelcomePresentation(lang) {
-                langBox.style.display = "none";
+            function startWelcomePresentation() {
+                // إخفاء زر البدء الأولي وتجهيز حقل النصوص
+                startTriggerBtn.style.display = "none";
                 welcomeTextElement.style.display = "block";
                 typingCursor.style.display = "inline-block";
                 
                 closeWelcomeBtn.classList.add('active');
                 closeWelcomeBtn.style.cursor = "pointer";
 
-                localStorage.setItem("atlas_lang", lang);
+                localStorage.setItem("atlas_lang", "ar");
                 
-                if (lang === "ar") {
-                    selectedParagraphs = welcom_txt_ar_paragraphs;
-                    welcomeTextElement.className = "rtl-layout";
-                    closeWelcomeBtn.textContent = "تَخَطِّي وَدُخُولُ الْأَطْلَسِ";
-                    currentAudio = new Audio('audio/arabic/رسالة ترحيبية.mp3');
-                } else {
-                    selectedParagraphs = welcome_txt_fr_paragraphs;
-                    welcomeTextElement.className = "ltr-layout";
-                    closeWelcomeBtn.textContent = "Passer et Entrer";
-                    currentAudio = new Audio('audio/latin/bienvenue.mp3');
-                }
-
-                // حساب الطول الإجمالي للحروف لضبط التزامن الصوتي
-                totalLength = selectedParagraphs.reduce((acc, p) => acc + p.length, 0);
-
+                // تشغيل الصوت الترحيبي العربي مباشرة
+                currentAudio = new Audio('audio/arabic/رسالة ترحيبية.mp3');
                 currentAudio.volume = 1.0;
                 currentAudio.play().catch(error => console.log("التشغيل الصوتي اختياري:", error));
 
-                // بدء التأثير الديناميكي الخالي من التراكم
+                // بدء تأثير الكتابة والتلاشي المتتابع
                 typeWriter();
 
                 currentAudio.addEventListener('ended', () => {
@@ -268,8 +256,8 @@
                 });
             }
 
-            btnAr.addEventListener("click", () => startWelcomePresentation("ar"));
-            btnFr.addEventListener("click", () => startWelcomePresentation("fr"));
+            // ربط الحدث بزر البدء العربي الموحد
+            startTriggerBtn.addEventListener("click", startWelcomePresentation);
 
             function enterTheApp() {
                 if (currentAudio) {
