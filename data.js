@@ -126,7 +126,7 @@ const flowersData = [
       growth_stages: [
         {
           stage_name: "طور الإزهار الكامل وانتشار البتلات الشمعية",
-          img_path: "images/helichrysum_sanguineum.jpg",
+          img_path: "images/helichrysum_sanguineum_st1.jpg",
           is_primary: true
         },
         {
