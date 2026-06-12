@@ -571,7 +571,7 @@ const flowersData = [
         story: "من أبهى النباتات الشوكية البرية في جبال لبنان وتنتمي للفصيلة النجمية. تشتهر برؤوسها الزهرية الكبيرة ذات اللون البنفسجي الفاقع المحاطة بأشواك حامية قوية، وتعتبر جاذباً رئيسياً للنحل والحشرات البرية. أوراقها القاعدية الكبيرة تتميز بعروق بيضاء حليبية متفرعة تعطيها مظهراً رخامياً ساحراً في الطبيعة.",
         growth_stages: [
             { 
-                stage_name: "طور النمو الخضري والأوراق Mمبرقشة", 
+                stage_name: "طور النمو الخضري والأوراق مبرقشة", 
                 img_path: "images/silybum_marianum_st1.jpg", 
                 is_primary: false 
             },
@@ -579,6 +579,11 @@ const flowersData = [
                 stage_name: "طور التزهير البنفسجي الكامل (جذب الملقحات)", 
                 img_path: "images/silybum_marianum_st2.jpg", 
                 is_primary: true 
+            }
+            { 
+                stage_name_ar: "طور النضج الميداني ونهاية الموسم", 
+                img_path: "images/silybum_marianum_st3.jpg", 
+                is_primary: false 
             }
         ]
     },
