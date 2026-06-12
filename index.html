@@ -10,6 +10,13 @@
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f4efe6;
+            opacity: 1;
+            transition: opacity 0.8s ease-in-out; /* نعومة التلاشي خلال 0.8 ثانية */
+        }
+
+        body.fade-out-active {
+            opacity: 0; /* التلاشي الكامل */
+            background-color: #000; /* يمكنك تغييره إلى #f4efe6 ليطابق لون الخلفية لديك */
         }
 
         .welcome-overlay {
@@ -40,17 +47,95 @@
             box-sizing: border-box;
         }
 
-        .welcome-logo {
-            width: 240px;
-            height: 240px;
-            object-fit: contain;
-            margin-bottom: 15px;
+        /* ================= حاوية الشعار الدوار والكبشن القوسي السفلي المعدلة ================= */
+        .coin-wrapper {
+            width: 320px;
+            height: 380px; /* تم زيادة الارتفاع ليتسع للكبشن الكبير ويدفع النصوص لأسفل بفاصل مريح */
+            margin: 0 auto 25px auto; /* زيادة الهامش السفلي لخلق فاصل مريح مع العنوان */
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
         }
+
+        .coin-inner-wrapper {
+            width: 320px; /* القطر المكبر المعتمد لديك */
+            height: 320px;
+            perspective: 1000px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .coin-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+            transition: transform 1.6s ease-in-out; 
+            transform: rotateY(0deg);
+        }
+
+        .coin-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+            border: 2px solid white;
+        }
+
+        .face-front {
+            background-color: #1e7135;
+        }
+
+        .welcome-logo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .face-back {
+            transform: rotateY(180deg);
+            background-color: #e2e8f0;
+        }
+
+        .landscape-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* عنصر الـ SVG للكبشن الدائري القوسي الثابت أسفل الصورة */
+        .circular-caption-svg {
+            position: absolute;
+            width: 340px;
+            height: 100px;
+            bottom: -5px; /* تموضعه بدقة ليعطي فاصلاً مريحاً للنظر أسفل إطار العملة الدائرية */
+            z-index: 3;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+        }
+
+        .circular-caption-svg text {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 22px; /* حجم الخط المريح الكبير المعتمد لديك */
+            font-weight: bold;
+            fill: #8B5A2B;
+        }
+        /* =================================================================================== */
 
         .welcome-card h2 {
             color: #2e7d32;
-            font-size: 2rem;
-            margin-top: 0;
+            font-size: 1.5rem;
+            margin-top: 15px;
             margin-bottom: 15px;
         }
 
@@ -103,7 +188,6 @@
             text-align: justify;
         }
 
-        /* كلاس التلاشي والصعود المتناسق */
         .welcome-card p.fade-out-line {
             opacity: 0;
             transform: translateY(-20px);
@@ -154,12 +238,36 @@
 
     <div id="welcomeModal" class="welcome-overlay">
         <div class="welcome-card">
-            <img src="atlas_logo.png" alt="شعار أطلس العزونية" class="welcome-logo">
+            
+            <div class="coin-wrapper">
+                
+                <div class="coin-inner-wrapper">
+                    <div id="welcomeCoin" class="coin-container">
+                        <div class="coin-face face-front">
+                            <img src="atlas_logo.png" alt="شعار أطلس العزونية" class="welcome-logo">
+                        </div>
+                        <div class="coin-face face-back">
+                            <img id="landscapeView" src="images/landscapes/nasim-al-murooj-wa-zohoor-al-nafal-al-barri.jpg" alt="طبيعة العزونية" class="landscape-img">
+                        </div>
+                    </div>
+                </div>
+
+                <svg class="circular-caption-svg" id="circularCaptionSvg" viewBox="0 0 300 90">
+                    <defs>
+                        <path id="bottomArcPath" d="M 15,15 A 175,175 0 0,0 280,15" fill="none" />
+                    </defs>
+                    <text>
+                        <textPath href="#bottomArcPath" startOffset="50%" text-anchor="middle" id="circularTextPath">
+                        </textPath>
+                    </text>
+                </svg>
+
+            </div>
             
             <h2>أهْلًا بِكَ فِي أَطْلَسِ الْأَشْجَارِ، النَّبَاتَاتِ وَالْأَزْهَارِ الْبَرِّيَّةِ التَّفَاعُلِيِّ</h2>
             
             <div class="dynamic-text-container">
-                <button id="startTriggerBtn" class="start-interaction-btn">اضغط هنا لنبدأ العرض ➔</button>
+                <button id="startTriggerBtn" class="start-interaction-btn"> ابدأ  ➔</button>
                 
                 <p id="welcomeText"></p>
                 <span id="typingCursor" class="cursor">|</span>
@@ -171,14 +279,36 @@
 
    <script>
         document.addEventListener("DOMContentLoaded", () => {
+            // =========================================================================
+            // 🛠️ وضع التطوير والصيانة (Pause Mode) 🛠️
+            // اجعلها true لتجميد الشعار ومعاينة المسافات وحجم الكبشن الجديد براحتك
+            // اجعلها false عند الانتهاء ليعود العرض السينمائي التلقائي والدوران للعمل
+            const isPausedMode = false; 
+            // =========================================================================
+
             const welcomeTextElement = document.getElementById("welcomeText");
             const closeWelcomeBtn = document.getElementById("closeWelcomeBtn");
             const typingCursor = document.getElementById("typingCursor");
             const startTriggerBtn = document.getElementById("startTriggerBtn");
+            
+            const welcomeCoin = document.getElementById("welcomeCoin");
+            const landscapeView = document.getElementById("landscapeView");
+            const circularCaptionSvg = document.getElementById("circularCaptionSvg");
+            const circularTextPath = document.getElementById("circularTextPath");
 
-            // نصوص العرض باللغة العربية فقط (مع تصحيح "الثروة")
+            const landscapesPool = [
+                { img: "images/landscapes/nasim-al-murooj-wa-zohoor-al-nafal-al-barri.jpg", caption: "نَسِيمُ الْمُرُوجِ وَزُهُورُ النَّفَلِ الْبَرِّيِّ" },
+                { img: "images/landscapes/shaqaeq-al-noman-fi-hedn-ekleel-al-jabal.jpg", caption: "شَقَائِقُ النُّعْمَانِ فِي حِضْنِ إِكْلِيلِ الْجَبَلِ" },
+                { img: "images/landscapes/mada-al-jibal-wal-munhadarat-al-sakhriyah.jpg", caption: "مَدَى الْجِبَالِ وَالْمُنْحَدَرَاتِ الصَّخْرِيَّةِ" },
+                { img: "images/landscapes/shumookh-al-aghsan-tahta-al-samaa-al-zarqaa.jpg", caption: "شُمُوخُ الْأَغْصَانِ تَحْتَ السَّمَاءِ الزَّرْقَاءِ" },
+                { img: "images/landscapes/ridaa-al-orjowan-yoghatti-ruboo-al-baldah.jpg", caption: "رِدَاءُ الْأُرْجُوَانِ يُغَطِّي رُبُوعَ الْبَلْدَةِ" },
+                { img: "images/landscapes/zohoor-bakhoor-maryam-baina-al-sukhoor.jpg", caption: "زُهُورُ بَخُورِ مَرْيَمَ بَيْنَ الصُّخُورِ" },
+                { img: "images/landscapes/taaloq-al-azhaar-al-safraa-fil-murooj.jpg", caption: "تَأَلُّقُ الْأَزْهَارِ الصَّفْرَاءِ فِي الْمُرُوجِ" },
+                { img: "images/landscapes/naghamat-al-banafsaj-fi-barriyat-al-baldah.jpg", caption: "نَغَمَاتُ الْبَنَفْسَجِ فِي بَرِّيَّةِ الْبَلْدَةِ" }
+            ];
+
             const welcom_txt_ar_paragraphs = [
-                `أَهْلًا بِكَ فِي أَطْلَسِ الْأَشْجَارِ، النَّبَاتَاتِ وَالْأَزْهَارِ الْبَرِّيَّةِ التَّفَاعُلِيِّ؛ دَلِيلِكَ الرَّقْمِيِّ الشَّامِلِ لِاسْتِكْشَافِ الثَّرْوَةِ النَّبَاتِيَّةِ مِنْ حَوْلِكَ.`,
+                `أَهْلًا بِكَ فِي أَطْلَسِ الْأَشْجَارِ، النَّبَاتَاتِ وَالْأَزْهَارِ الْبَرِّيَّةِ التَّفَاعُلِيِّ؛ دَلِيلِكَ الرَّقْمِيِّ الشَّامِلِ لِاسْتِكْشَافِ الثَّرْوزةِ النَّبَاتِيَّةِ مِنْ حَوْلِكَ.`,
                 `هَذَا التَّطْبِيقُ مُصَمَّمٌ خَصِيصًا لِمُسَاعَدَتِكَ فِي التَّعَرُّفِ عَلَى الزُّهُورِ وَالْأَعْشَابِ الْبَرِّيَّةِ، وَمَعْرِفَةِ مَوَاسِمِ إِزْهَارِهَا وَبِيئَاتِهَا الطَّبِيعِيَّةِ عَبْرَ وَاجِهَاتٍ تَفَاعُلِيَّةٍ وَمُرِيحَةٍ.`,
                 `يُمْكِنُكَ الْآنَ التَّنَقُّلُ بَيْنَ الْبِطَاقَاتِ الَّتِي تَحْتَوِي عَلَى الْمَعْلُومَاتِ وَالصُّوَرِ الْحَيَّةِ للنباتات، وَالِاسْتِمَاعُ لِنُّطْقِ أَسْمَائِها بِاللُّغَتَيْنِ الْعَرَبِيَّةِ وَاللَّاتِينِيَّةِ.`,
                 `نَتَمَنَّى لَكَ رِحْلَةَ اسْتِكْشَافٍ مُمْتِعَةً وَمُثْمِرَةً!`
@@ -187,10 +317,29 @@
             let paragraphIndex = 0;
             let charIndex = 0;
             let currentAudio = null;
+            let landscapeIndex = 0;
+            let coinAnimationInterval = null;
+            let currentRotationAngle = 0; 
             
-            // حساب الطول الإجمالي للنصوص لضبط تزامن السرعة
             const totalLength = welcom_txt_ar_paragraphs.reduce((acc, p) => acc + p.length, 0);
 
+            // تفعيل وضع التثبيت الفوري إذا كان وضع التطوير مفعلًا
+            if (isPausedMode) {
+                startTriggerBtn.style.display = "none";
+                welcomeCoin.style.transition = "none"; 
+                welcomeCoin.style.transform = "rotateY(180deg)"; 
+                
+                landscapeView.src = landscapesPool[0].img;
+                circularTextPath.textContent = landscapesPool[0].caption;
+                circularCaptionSvg.style.opacity = "1"; 
+                
+                // جعل زر التخطي فعالاً دائماً في وضع الصيانة للاختبار
+                closeWelcomeBtn.classList.add('active');
+                closeWelcomeBtn.style.cursor = "pointer";
+                closeWelcomeBtn.textContent = "اِبْدَأْ الِاسْتِكْشَافَ ➔";
+            }
+
+            // محرك الكتابة المتتابع المطور لمنع التوقف عند الفقرة الأولى
             function typeWriter() {
                 if (paragraphIndex < welcom_txt_ar_paragraphs.length) {
                     let currentParagraphText = welcom_txt_ar_paragraphs[paragraphIndex];
@@ -198,33 +347,49 @@
                     if (charIndex < currentParagraphText.length) {
                         welcomeTextElement.textContent += currentParagraphText.charAt(charIndex);
                         charIndex++;
-                        
-                        // احتساب السرعة لتتطابق حركة الكتابة تلقائياً مع مدة الـ 30 ثانية للصوت
-                        const typingSpeed = (30 * 1000) / totalLength;
-                        setTimeout(typeWriter, typingSpeed);
+                        setTimeout(typeWriter, 40);
                     } else {
-                        // عند اكتمال كتابة السطر الحالي
                         setTimeout(() => {
                             if (paragraphIndex < welcom_txt_ar_paragraphs.length - 1) {
-                                // إضافة تأثير التلاشي والصعود للأعلى
                                 welcomeTextElement.classList.add('fade-out-line');
                                 
-                                // الانتظار حتى ينتهي تأثير الـ CSS ثم مسح النص والبدء في السطر التالي
                                 setTimeout(() => {
                                     welcomeTextElement.textContent = "";
                                     welcomeTextElement.classList.remove('fade-out-line');
                                     paragraphIndex++;
                                     charIndex = 0;
-                                    typeWriter();
+                                    typeWriter(); 
                                 }, 600);
                             } else {
-                                // عند الوصول للسطر الأخير والنهائي
                                 typingCursor.style.display = 'none';
                                 activateNavigationButton();
                             }
-                        }, 2500); // بقاء السطر مقروءاً لمدة ثانيتين ونصف قبل الانتقال
+                        }, 3000);
                     }
                 }
+            }
+
+            function startCoinRotationLoop() {
+                triggerRotationSequence();
+                coinAnimationInterval = setInterval(triggerRotationSequence, 7500);
+            }
+
+            function triggerRotationSequence() {
+                currentRotationAngle += 180;
+                const currentItem = landscapesPool[landscapeIndex];
+                landscapeView.src = currentItem.img;
+                circularTextPath.textContent = currentItem.caption; 
+                
+                welcomeCoin.style.transform = `rotateY(${currentRotationAngle}deg)`;
+                circularCaptionSvg.style.opacity = "1";
+
+                landscapeIndex = (landscapeIndex + 1) % landscapesPool.length;
+
+                setTimeout(() => {
+                    currentRotationAngle += 180;
+                    welcomeCoin.style.transform = `rotateY(${currentRotationAngle}deg)`;
+                    circularCaptionSvg.style.opacity = "0"; 
+                }, 5000); 
             }
 
             function activateNavigationButton() {
@@ -233,46 +398,51 @@
             }
 
             function startWelcomePresentation() {
-                // إخفاء زر البدء الأولي وتجهيز حقل النصوص
+                if(isPausedMode) return;
+                
                 startTriggerBtn.style.display = "none";
                 welcomeTextElement.style.display = "block";
                 typingCursor.style.display = "inline-block";
-                
                 closeWelcomeBtn.classList.add('active');
                 closeWelcomeBtn.style.cursor = "pointer";
 
-                localStorage.setItem("atlas_lang", "ar");
-                
-                // تشغيل الصوت الترحيبي العربي مباشرة
+                localStorage.setItem("atlas_first_time", "done");
+
                 currentAudio = new Audio('audio/arabic/رسالة ترحيبية.mp3');
                 currentAudio.volume = 1.0;
-                currentAudio.play().catch(error => console.log("التشغيل الصوتي اختياري:", error));
-
-                // بدء تأثير الكتابة والتلاشي المتتابع
-                typeWriter();
-
-                currentAudio.addEventListener('ended', () => {
-                    enterTheApp();
+                currentAudio.play().catch(error => {
+                    console.log("ملاحظة: المتصفح يمنع الصوت التلقائي، تم المتابعة بالنص المكتوب بنجاح.");
                 });
+
+                startCoinRotationLoop();
+                typeWriter();
             }
 
-            // ربط الحدث بزر البدء العربي الموحد
             startTriggerBtn.addEventListener("click", startWelcomePresentation);
 
             function enterTheApp() {
+                // 1. إيقاف المؤقتات والأصوات لمنع أي تداخل
+                if (coinAnimationInterval) clearInterval(coinAnimationInterval);
                 if (currentAudio) {
-                    currentAudio.pause();
-                    currentAudio.currentTime = 0;
+                    try {
+                        currentAudio.pause();
+                        currentAudio.currentTime = 0;
+                    } catch(e) {}
                 }
-                localStorage.setItem("atlas_first_time", "done");
-                window.location.href = "atlas.html"; 
+                
+                // 2. تفعيل تأثير التلاشي الأنيق على جسد الصفحة بالكامل
+                document.body.classList.add('fade-out-active');
+                
+                // 3. الانتظار حتى ينتهي التلاشي (800 مللي ثانية) ثم فتح الصفحة الجديدة بسلاسة
+                setTimeout(() => {
+                    localStorage.setItem("atlas_first_time", "done");
+                    window.location.href = "atlas.html"; 
+                }, 800); 
             }
 
-            closeWelcomeBtn.addEventListener("click", () => {
-                if (closeWelcomeBtn.classList.contains('active')) {
-                    enterTheApp();
-                }
-            });
+            // تفعيل مستمع الحدث لزر التخطي والدخول ليعمل في أي وقت بنجاح
+            closeWelcomeBtn.addEventListener("click", enterTheApp);
+                                
         });
     </script>
 </body>
