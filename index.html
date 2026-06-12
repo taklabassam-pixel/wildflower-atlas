@@ -8,15 +8,16 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f4efe6;
             opacity: 1;
             transition: opacity 0.8s ease-in-out; /* نعومة التلاشي خلال 0.8 ثانية */
+            -webkit-text-size-adjust: 100%; /* تمنع iOS من تضخيم النصوص تلقائياً */
         }
 
         body.fade-out-active {
             opacity: 0; /* التلاشي الكامل */
-            background-color: #000; /* يمكنك تغييره إلى #f4efe6 ليطابق لون الخلفية لديك */
+            background-color: #f4efe6; /* تم تعديله ليطابق لون الخلفية الفعلي لمنع وميض أسود */
         }
 
         .welcome-overlay {
@@ -25,38 +26,48 @@
             left: 0;
             width: 100vw;
             height: 100vh;
+            height: -webkit-fill-available; /* حل مشكلة شريط السفاري المتغير في الآيفون */
             background-color: rgba(0, 0, 0, 0.8);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 999999;
-            padding: 20px;
+            padding: 15px; /* تقليص الحواف لتوفر مساحة أكبر للشاشات الصغيرة */
             box-sizing: border-box;
+            overflow-y: auto; /* يسمح بالتمرير داخل الشاشة الترحيبية إذا كانت الشاشة صغيرة جداً */
+            -webkit-overflow-scrolling: touch; /* تمرير ناعم ومريح على الآيفون */
         }
 
         .welcome-card {
             background-color: #fcfbf7;
-            padding: 35px;
+            padding: 25px 20px; /* جعل الحشوة مرنة لتناسب طول الشاشات */
             border-radius: 20px;
             max-width: 650px;
             width: 100%;
+            max-height: 92vh; /* حماية الكرت من الخروج عن حدود الشاشة المتاحة */
+            overflow-y: auto; /* في حال زاد النص تظهر ميزة التمرير الداخلي تلقائياً */
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
             text-align: center;
             direction: rtl;
             border: 3px solid #8B5A2B;
             box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* إجبار جميع العناصر بداخل الكرت على التوسط الأفقي الصارم */
+            justify-content: space-between;
         }
 
         /* ================= حاوية الشعار الدوار والكبشن القوسي السفلي المعدلة ================= */
         .coin-wrapper {
-            width: 320px;
+            width: 100%; /* إعطاء مساحة كاملة للأب لضمان التوسط */
+            max-width: 320px;
             height: 380px; /* تم زيادة الارتفاع ليتسع للكبشن الكبير ويدفع النصوص لأسفل بفاصل مريح */
-            margin: 0 auto 25px auto; /* زيادة الهامش السفلي لخلق فاصل مريح مع العنوان */
+            margin: 0 auto 15px auto; /* تصفير الهوامش الجانبية بالتوازي لتوسيط هندسي حتمي */
             position: relative;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-            align-items: center;
+            align-items: center; /* توسيط داخلي مطلق */
         }
 
         .coin-inner-wrapper {
@@ -65,6 +76,18 @@
             perspective: 1000px;
             position: relative;
             z-index: 2;
+        }
+
+        @media (max-height: 700px) { /* استجابة مرنة وخاصة لشاشات الآيفون العادية والصغيرة */
+            .coin-wrapper {
+                transform: scale(0.85); /* تصغير نسببي متناسق لحماية المساحة العمودية */
+                margin-bottom: 5px;
+                height: 340px;
+            }
+            .dynamic-text-container {
+                min-height: 120px !important;
+                margin-bottom: 15px !important;
+            }
         }
 
         .coin-container {
@@ -99,6 +122,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block;
         }
 
         .face-back {
@@ -110,6 +134,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block;
         }
 
         /* عنصر الـ SVG للكبشن الدائري القوسي الثابت أسفل الصورة */
@@ -122,45 +147,56 @@
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.6s ease-in-out;
+            left: 50%;
+            transform: translateX(-50%); /* إجبار القوس الـ SVG على السقوط في السنتر الأفقي تماماً */
         }
 
         .circular-caption-svg text {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif;
             font-size: 22px; /* حجم الخط المريح الكبير المعتمد لديك */
             font-weight: bold;
             fill: #8B5A2B;
+            letter-spacing: 0px;
+            /* الخصائص التالية تمنع متصفح سفاري للآيفون من فصل الحروف العربية داخل نصوص الـ SVG */
+            font-variant-ligatures: common-ligatures;
+            -webkit-font-smoothing: antialiased;
+            text-anchor: middle;
         }
         /* =================================================================================== */
 
         .welcome-card h2 {
             color: #2e7d32;
-            font-size: 1.5rem;
-            margin-top: 15px;
-            margin-bottom: 15px;
+            font-size: 1.4rem;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            width: 100%;
+            text-align: center;
         }
 
         .dynamic-text-container {
-            min-height: 160px;
-            margin-bottom: 25px;
+            min-height: 150px;
+            margin-bottom: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             position: relative;
+            width: 100%;
         }
 
         .start-interaction-btn {
             background-color: #2e7d32;
             color: white;
             border: none;
-            padding: 15px 40px;
-            font-size: 1.6rem;
+            padding: 12px 35px;
+            font-size: 1.4rem;
             font-weight: bold;
             border-radius: 30px;
             cursor: pointer;
             box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4);
             transition: all 0.3s ease;
             animation: pulse 1.5s infinite;
+            -webkit-tap-highlight-color: transparent; /* إزالة الوميض الرمادي عند النقر في آيفون */
         }
 
         .start-interaction-btn:hover {
@@ -176,8 +212,8 @@
 
         .welcome-card p {
             color: #2c3e50;
-            font-size: 1.5rem;
-            line-height: 1.9;
+            font-size: 1.3rem; /* تصغير طفيف جداً ليتناسب مع أبعاد الشاشات الطولية */
+            line-height: 1.7;
             margin: 0;
             white-space: pre-line;
             display: none; 
@@ -186,6 +222,10 @@
             transition: opacity 0.6s ease, transform 0.6s ease;
             direction: rtl;
             text-align: justify;
+            /* تأمين اتصال الحروف العربية في الباراجرافات والسرد النصي بآيفون */
+            font-variant-ligatures: common-ligatures;
+            -webkit-font-smoothing: antialiased;
+            width: 100%;
         }
 
         .welcome-card p.fade-out-line {
@@ -219,6 +259,8 @@
             opacity: 0.5;
             display: inline-block;
             transition: all 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+            margin-bottom: 5px;
         }
 
         .welcome-btn.active {
@@ -232,7 +274,7 @@
         .welcome-btn.active:hover {
             background-color: #6f4721;
         }
-    </style>
+</style>
 </head>
 <body>
 
