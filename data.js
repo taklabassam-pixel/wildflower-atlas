@@ -114,16 +114,27 @@ const flowersData = [
             }
         ]
     },
-    {
-        id: 8,
-        name_ar: "دُمْيَةُ الغَزَال (الخُلُودُ الدَّمَوِيُّ)",
-        scientific_name: "helichrysum sanguineum",
-        audio_ar: "audio/arabic/helichrysum_sanguineum_ar.mp3",
-        audio_lat: "audio/latin/helichrysum_sanguineum_lat.mp3",
-        season: "أوج الربيع (آذار - أيار)",
-        environment: "المنحدرات الجبلية الجافة، الصخور المشمسة، والتربة الفقيرة الكلسية",
-        image: "images/helichrysum_sanguineum.jpg",
-        story: "من أثمن زهور الجبال الأيقونية التراثية. تتميز بسيقانها المكسوة بوبر صوفي كثيف بلون فضي لحمايتها من تبخر المياه، ورؤوسها الزهرية الحمراء القرمزية الشمعية القاسية التي لا تذبل أو تفقد لونها الدموي الجذاب حتى بعد قطفها وتجفيفها لسنوات، ولذلك سميت بزهرة الخلود."
+   {
+      id: 8,
+      name_ar: "دُمْيَةُ الغَزَال (الخُلُودُ الدَّمَوِيُّ)",
+      scientific_name: "Helichrysum sanguineum",
+      audio_ar: "audio/arabic/helichrysum_sanguineum_ar.mp3",
+      audio_lat: "audio/latin/helichrysum_sanguineum_lat.mp3",
+      season: "أوج الربيع (آذار - أيار)",
+      environment: "المنحدرات الجبلية الجافة، الصخور المشمسة، والتربة الفقيرة الكلسية",
+      story: "من أثمن زهور الجبال الأيقونية التراثية. تتميز بسيقانها المكسوة بوبر صوفي كثيف بلون فضي لحمايتها من تبخر المياه، ورؤوسها الزهرية الحمراء القرمزية الشمعية القاسية التي لا تذبل أو تفقد لونها الدموي الجذاب حتى بعد قطفها وتجفيفها لسنوات، ولذلك سميت بزهرة الخلود.",
+      growth_stages: [
+        {
+          stage_name: "طور الإزهار الكامل وانتشار البتلات الشمعية",
+          img_path: "images/helichrysum_sanguineum.jpg",
+          is_primary: true
+        },
+        {
+          stage_name: "طور تشكل الكرات المخملية القرمزية والوبر القطني الفضي",
+          img_path: "images/helichrysum_sanguineum_st2.jpg",
+          is_primary: false
+        }
+      ]
     },
     {
         id: 9, 
