@@ -590,7 +590,7 @@ const flowersData = [
                 stage_name: "طور التزهير البنفسجي الكامل (جذب الملقحات)", 
                 img_path: "images/silybum_marianum_st2.jpg", 
                 is_primary: true 
-            }
+            },
             { 
                 stage_name_ar: "طور النضج الميداني ونهاية الموسم", 
                 img_path: "images/silybum_marianum_st3.jpg", 
