@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>واجهة ترحيب أطلس العزونية التفاعلي</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4efe6;
+            opacity: 1;
+            transition: opacity 0.8s ease-in-out; /* نعومة التلاشي خلال 0.8 ثانية */
+        }
+
+        body.fade-out-active {
+            opacity: 0; /* التلاشي الكامل */
+            background-color: #000; /* يمكنك تغييره إلى #f4efe6 ليطابق لون الخلفية لديك */
+        }
+
+        .welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999999;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+/* ================= حاوية الشعار والكبشن القوسي المتناظرة بالكامل ================= */
+        .welcome-card {
+            background-color: #fcfbf7;
+            padding: 25px 20px;
+            border-radius: 20px;
+            max-width: 650px;
+            width: 100%;
+            max-height: 92vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            direction: rtl;
+            border: 3px solid #8B5A2B;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center !important;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .coin-wrapper {
+            width: 100% !important;
+            max-width: 280px !important; 
+            height: 380px !important; /* 🔥 تم رفع الارتفاع من 340 إلى 380 لحماية النص السفلي من الاختفاء والقاص */
+            margin: 0 auto 5px auto !important; 
+            position: relative !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: flex-start !important;
+            align-items: center !important;
+        }
+
+        .coin-inner-wrapper {
+            width: 100% !important; 
+            max-width: 260px !important; /* قطر العملة الدائرية الثابت */
+            aspect-ratio: 1 / 1 !important; 
+            height: auto !important;
+            perspective: 1000px !important;
+            position: relative !important;
+            margin: 0 auto !important;
+            z-index: 2 !important;
+        }
+
+        /* حاوية الدوران التناظرية المرنة للـ JavaScript */
+        .coin-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+            transition: transform 1.6s ease-in-out; 
+            transform: rotateY(0deg);
+        }
+
+        .coin-face {
+            position: absolute !important;
+            width: 100% !important;
+            height: 100% !important;
+            border-radius: 50% !important;
+            backface-visibility: hidden !important;
+            -webkit-backface-visibility: hidden !important;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            overflow: hidden !important;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.2) !important;
+            border: 2px solid white !important;
+        }
+
+        .face-front {
+            background-color: #1e7135 !important;
+        }
+
+        .welcome-logo {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            display: block !important;
+        }
+
+        .face-back {
+            transform: rotateY(180deg) !important;
+            background-color: #e2e8f0 !important;
+        }
+
+        .landscape-img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            display: block !important;
+        }
+
+        /* عنصر الـ SVG - تم ضبط موقعه وأبعاده ليتطابق مع الارتفاع الممتد الجديد للأب */
+        .circular-caption-svg {
+            position: absolute !important;
+            width: 100% !important;
+            max-width: 260px !important; 
+            height: auto !important;
+            aspect-ratio: 300 / 180 !important; /* نسبة العرض للارتفاع المستحدثة لمنع التمدد */
+            top: 200px !important; /* دفعه لأسفل ليرتكز مركز القوس تحت العملة مباشرة بدون أن تقصه حدود الحاوية */
+            z-index: 3 !important;
+            pointer-events: none !important;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+        }
+
+        .circular-caption-svg text {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Tahoma, Geneva, Verdana, sans-serif !important;
+            font-size: 19px !important; 
+            font-weight: bold !important;
+            fill: #8B5A2B !important;
+            font-variant-ligatures: common-ligatures !important;
+            -webkit-font-smoothing: antialiased !important;
+            text-anchor: middle !important;
+            dominant-baseline: alphabetic !important; 
+        }
+        /* =================================================================================== */
+
+       .welcome-card h2 {
+            color: #2e7d32;
+            font-size: 1.2rem;
+            margin-top: 15px;
+            margin-bottom: 15px;
+
+            /* 🔥 التعديل السحري: سحب السطر الأخضر للأعلى بشكل مستقل تماماً وثبات ما حوله */
+            position: relative !important;
+            transform: translateY(-20px) !important; /* القيمة السالبة تدفعه للأعلى */
+        }
+
+        .dynamic-text-container {
+            min-height: 160px;
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .start-interaction-btn {
+            background-color: #2e7d32;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.6rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4);
+            transition: all 0.3s ease;
+            animation: pulse 1.5s infinite;
+        }
+
+        .start-interaction-btn:hover {
+            background-color: #1b5e20;
+            transform: scale(1.05);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4); }
+            50% { transform: scale(1.03); box-shadow: 0 6px 30px rgba(46, 125, 50, 0.6); }
+            100% { transform: scale(1); box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4); }
+        }
+
+        .welcome-card p {
+            color: #2c3e50;
+            font-size: 1.3rem;
+            line-height: 1.9;
+            margin: 0;
+            white-space: pre-line;
+            display: none; 
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            direction: rtl;
+            text-align: justify;
+        }
+
+        .welcome-card p.fade-out-line {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        .cursor {
+            display: none;
+            width: 3px;
+            background-color: #2e7d32;
+            margin-right: 5px;
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .welcome-btn {
+            background-color: #7f8c8d;
+            color: white;
+            border: none;
+            padding: 12px 40px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: not-allowed;
+            opacity: 0.5;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .welcome-btn.active {
+            background-color: #8B5A2B; 
+            color: white;
+            cursor: pointer;
+            opacity: 1;
+            box-shadow: 0 5px 15px rgba(139, 90, 43, 0.4);
+        }
+
+        .welcome-btn.active:hover {
+            background-color: #6f4721;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="welcomeModal" class="welcome-overlay">
+        <div class="welcome-card">
+            
+            <div class="coin-wrapper">
+                
+                <div class="coin-inner-wrapper">
+                    <div id="welcomeCoin" class="coin-container">
+                        <div class="coin-face face-front">
+                            <img src="atlas_logo.png" alt="شعار أطلس العزونية" class="welcome-logo">
+                        </div>
+                        <div class="coin-face face-back">
+                            <img id="landscapeView" src="images/landscapes/nasim-al-murooj-wa-zohoor-al-nafal-al-barri.jpg" alt="طبيعة العزونية" class="landscape-img">
+                        </div>
+                    </div>
+                </div>
+
+             <svg class="circular-caption-svg" id="circularCaptionSvg" viewBox="0 0 300 120">
+    <defs>
+        <path id="bottomArcPath" d="M 15,15 A 170,170 0 0,0 285,15" fill="none"></path>
+    </defs>
+    <text>
+        <textPath href="#bottomArcPath" startOffset="50%" text-anchor="middle" id="circularTextPath">
+            </textPath>
+    </text>
+</svg>
+            </div>
+            
+            <h2>أهْلًا بِكَ فِي أَطْلَسِ الْأَشْجَارِ، النَّبَاتَاتِ وَالْأَزْهَارِ الْبَرِّيَّةِ التَّفَاعُلِيِّ</h2>
+            
+            <div class="dynamic-text-container">
+                <button id="startTriggerBtn" class="start-interaction-btn"> ابدأ  ➔</button>
+                
+                <p id="welcomeText"></p>
+                <span id="typingCursor" class="cursor">|</span>
+            </div>
+            
+            <button id="closeWelcomeBtn" class="welcome-btn">تَخَطِّي وَدُخُولُ الْأَطْلَسِ</button>
+        </div>
+    </div>
+
+   <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // =========================================================================
+            // 🛠️ وضع التطوير والصيانة (Pause Mode) 🛠️
+            // اجعلها true لتجميد الشعار ومعاينة المسافات وحجم الكبشن الجديد براحتك
+            // اجعلها false عند الانتهاء ليعود العرض السينمائي التلقائي والدوران للعمل
+            const isPausedMode = false; 
+            // =========================================================================
+
+            const welcomeTextElement = document.getElementById("welcomeText");
+            const closeWelcomeBtn = document.getElementById("closeWelcomeBtn");
+            const typingCursor = document.getElementById("typingCursor");
+            const startTriggerBtn = document.getElementById("startTriggerBtn");
+            
+            const welcomeCoin = document.getElementById("welcomeCoin");
+            const landscapeView = document.getElementById("landscapeView");
+            const circularCaptionSvg = document.getElementById("circularCaptionSvg");
+            const circularTextPath = document.getElementById("circularTextPath");
+
+            const landscapesPool = [
+                { img: "images/landscapes/shaqaeq-al-noman-fi-hedn-ekleel-al-jabal.jpg", caption: "شَقَائِقُ النُّعْمَانِ فِي حِضْنِ إِكْلِيلِ الْجَبَلِ" },
+                { img: "images/landscapes/nasim-al-murooj-wa-zohoor-al-nafal-al-barri.jpg", caption: "نَسِيمُ الْمُرُوجِ وَزُهُورُ النَّفَلِ الْبَرِّيِّ" },
+                { img: "images/landscapes/mada-al-jibal-wal-munhadarat-al-sakhriyah.jpg", caption: "مَدَى الْجِبَالِ وَالْمُنْحَدَرَاتِ الصَّخْرِيَّةِ" },
+                { img: "images/landscapes/shumookh-al-aghsan-tahta-al-samaa-al-zarqaa.jpg", caption: "شُمُوخُ الْأَغْصَانِ تَحْتَ السَّمَاءِ الزَّرْقَاءِ" },
+                { img: "images/landscapes/ridaa-al-orjowan-yoghatti-ruboo-al-baldah.jpg", caption: "رِدَاءُ الْأُرْجُوَانِ يُغَطِّي رُبُوعَ الْبَلْدَةِ" },
+                { img: "images/landscapes/zohoor-bakhoor-maryam-baina-al-sukhoor.jpg", caption: "زُهُورُ بَخُورِ مَرْيَمَ بَيْنَ الصُّخُورِ" },
+                { img: "images/landscapes/taaloq-al-azhaar-al-safraa-fil-murooj.jpg", caption: "تَأَلُّقُ الْأَزْهَارِ الصَّفْرَاءِ فِي الْمُرُوجِ" },
+                { img: "images/landscapes/naghamat-al-banafsaj-fi-barriyat-al-baldah.jpg", caption: "نَغَمَاتُ الْبَنَفْسَجِ فِي بَرِّيَّةِ الْبَلْدَةِ" }
+            ];
+
+            const welcom_txt_ar_paragraphs = [
+                `أَهْلًا بِكَ فِي أَطْلَسِ الْأَشْجَارِ، النَّبَاتَاتِ وَالْأَزْهَارِ الْبَرِّيَّةِ التَّفَاعُلِيِّ؛ دَلِيلِكَ الرَّقْمِيِّ الشَّامِلِ لِاسْتِكْشَافِ الثَّرْوزةِ النَّبَاتِيَّةِ مِنْ حَوْلِكَ.`,
+                `هَذَا التَّطْبِيقُ مُصَمَّمٌ خَصِيصًا لِمُسَاعَدَتِكَ فِي التَّعَرُّفِ عَلَى الزُّهُورِ وَالْأَعْشَابِ الْبَرِّيَّةِ، وَمَعْرِفَةِ مَوَاسِمِ إِزْهَارِهَا وَبِيئَاتِهَا الطَّبِيعِيَّةِ عَبْرَ وَاجِهَاتٍ تَفَاعُلِيَّةٍ وَمُرِيحَةٍ.`,
+                `يُمْكِنُكَ الْآنَ التَّنَقُّلُ بَيْنَ الْبِطَاقَاتِ الَّتِي تَحْتَوِي عَلَى الْمَعْلُومَاتِ وَالصُّوَرِ الْحَيَّةِ للنباتات، وَالِاسْتِمَاعُ لِنُّطْقِ أَسْمَائِها بِاللُّغَتَيْنِ الْعَرَبِيَّةِ وَاللَّاتِينِيَّةِ.`,
+                `نَتَمَنَّى لَكَ رِحْلَةَ اسْتِكْشَافٍ مُمْتِعَةً وَمُثْمِرَةً!`
+            ];
+
+            let paragraphIndex = 0;
+            let charIndex = 0;
+            let currentAudio = null;
+            let landscapeIndex = 0;
+            let coinAnimationInterval = null;
+            let currentRotationAngle = 0; 
+            
+            const totalLength = welcom_txt_ar_paragraphs.reduce((acc, p) => acc + p.length, 0);
+
+            // تفعيل وضع التثبيت الفوري إذا كان وضع التطوير مفعلًا
+            if (isPausedMode) {
+                startTriggerBtn.style.display = "none";
+                welcomeCoin.style.transition = "none"; 
+                welcomeCoin.style.transform = "rotateY(180deg)"; 
+                
+                landscapeView.src = landscapesPool[0].img;
+                circularTextPath.textContent = landscapesPool[0].caption;
+                circularCaptionSvg.style.opacity = "1"; 
+                
+                // جعل زر التخطي فعالاً دائماً في وضع الصيانة للاختبار
+                closeWelcomeBtn.classList.add('active');
+                closeWelcomeBtn.style.cursor = "pointer";
+                closeWelcomeBtn.textContent = "اِبْدَأْ الِاسْتِكْشَافَ ➔";
+            }
+
+            // محرك الكتابة المتتابع المطور لمنع التوقف عند الفقرة الأولى
+            function typeWriter() {
+                if (paragraphIndex < welcom_txt_ar_paragraphs.length) {
+                    let currentParagraphText = welcom_txt_ar_paragraphs[paragraphIndex];
+                    
+                    if (charIndex < currentParagraphText.length) {
+                        welcomeTextElement.textContent += currentParagraphText.charAt(charIndex);
+                        charIndex++;
+                        setTimeout(typeWriter, 40);
+                    } else {
+                        setTimeout(() => {
+                            if (paragraphIndex < welcom_txt_ar_paragraphs.length - 1) {
+                                welcomeTextElement.classList.add('fade-out-line');
+                                
+                                setTimeout(() => {
+                                    welcomeTextElement.textContent = "";
+                                    welcomeTextElement.classList.remove('fade-out-line');
+                                    paragraphIndex++;
+                                    charIndex = 0;
+                                    typeWriter(); 
+                                }, 600);
+                            } else {
+                                typingCursor.style.display = 'none';
+                                activateNavigationButton();
+                            }
+                        }, 3000);
+                    }
+                }
+            }
+
+            function startCoinRotationLoop() {
+                triggerRotationSequence();
+                coinAnimationInterval = setInterval(triggerRotationSequence, 7500);
+            }
+
+            function triggerRotationSequence() {
+                currentRotationAngle += 180;
+                const currentItem = landscapesPool[landscapeIndex];
+                landscapeView.src = currentItem.img;
+                circularTextPath.textContent = currentItem.caption; 
+                
+                welcomeCoin.style.transform = `rotateY(${currentRotationAngle}deg)`;
+                circularCaptionSvg.style.opacity = "1";
+
+                landscapeIndex = (landscapeIndex + 1) % landscapesPool.length;
+
+                setTimeout(() => {
+                    currentRotationAngle += 180;
+                    welcomeCoin.style.transform = `rotateY(${currentRotationAngle}deg)`;
+                    circularCaptionSvg.style.opacity = "0"; 
+                }, 5000); 
+            }
+
+            function activateNavigationButton() {
+                closeWelcomeBtn.classList.add('active');
+                closeWelcomeBtn.textContent = "اِبْدَأْ الِاسْتِكْشَافَ ➔";
+            }
+
+            function startWelcomePresentation() {
+                if(isPausedMode) return;
+                
+                startTriggerBtn.style.display = "none";
+                welcomeTextElement.style.display = "block";
+                typingCursor.style.display = "inline-block";
+                closeWelcomeBtn.classList.add('active');
+                closeWelcomeBtn.style.cursor = "pointer";
+
+                localStorage.setItem("atlas_first_time", "done");
+
+                currentAudio = new Audio('audio/arabic/رسالة ترحيبية.mp3');
+                currentAudio.volume = 1.0;
+                currentAudio.play().catch(error => {
+                    console.log("ملاحظة: المتصفح يمنع الصوت التلقائي، تم المتابعة بالنص المكتوب بنجاح.");
+                });
+
+                startCoinRotationLoop();
+                typeWriter();
+            }
+
+            startTriggerBtn.addEventListener("click", startWelcomePresentation);
+
+            function enterTheApp() {
+                // 1. إيقاف المؤقتات والأصوات لمنع أي تداخل
+                if (coinAnimationInterval) clearInterval(coinAnimationInterval);
+                if (currentAudio) {
+                    try {
+                        currentAudio.pause();
+                        currentAudio.currentTime = 0;
+                    } catch(e) {}
+                }
+                
+                // 2. تفعيل تأثير التلاشي الأنيق على جسد الصفحة بالكامل
+                document.body.classList.add('fade-out-active');
+                
+                // 3. الانتظار حتى ينتهي التلاشي (800 مللي ثانية) ثم فتح الصفحة الجديدة بسلاسة
+                setTimeout(() => {
+                    localStorage.setItem("atlas_first_time", "done");
+                    window.location.href = "atlas.html"; 
+                }, 800); 
+            }
+
+            // تفعيل مستمع الحدث لزر التخطي والدخول ليعمل في أي وقت بنجاح
+            closeWelcomeBtn.addEventListener("click", enterTheApp);
+                                
+        });
+    </script>
+</body>
+</html>
