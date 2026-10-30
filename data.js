@@ -367,9 +367,9 @@ const flowersData = [
     },
     {
         id: 25,
-        name_ar: "شَقِيقُ النُّعْمَانِ القَانِي (خَشْخَاشُ الحُقُولِ النَّارِي)",
+        name_ar: "شَقِيقُ النُّعْمَانِ الشَّائع (الخَشْخَاشُ المَنْثُور)",
         scientific_name: "Papaver rhoeas",
-        audio_ar: "audio/arabic/papaver_rhoeas_ar.mp3",
+        audio_ar: "audio/arabic/papaver_rhoeas_ar-1.mp3",
         audio_lat: "audio/latin/papaver_rhoeas_lat.mp3",
         season: "أوج الربيع (آذار - أيار)",
         environment: "الحقول المفتوحة، المراعي العشبية المشمسة، وجوانب الطرقات والمسالك الجبلية في العزونية",
@@ -584,7 +584,7 @@ const flowersData = [
     },
     {
         id: 36, 
-        name_ar: "السِّنْدِيان العادي (بَلُّوط فِلَسْطِين / السِّنْدِيان الأخْضَر)",
+        name_ar: "السِّنْدِيان العادي (السِّنْدِيان اللُبنَاني / السِّنْدِيان الأخْضَر)",
         scientific_name: "Quercus calliprinos",
         audio_ar: "audio/arabic/quercus_calliprinos_ar.mp3",
         audio_lat: "audio/latin/quercus_calliprinos_lat.mp3",
@@ -623,7 +623,7 @@ const flowersData = [
     },
     {
         id: 38, 
-        name_ar: "لِحْيَة التَّيْس المَشْرِقِيَّة (ذَقْن الشَّيْخ / دَبْح)",
+        name_ar: "لِحْيَة التَّيْس المَشْرِقِيَّة ",
         scientific_name: "Tragopogon orientalis",
         audio_ar: "audio/arabic/tragopogon_orientalis_ar.mp3",
         audio_lat: "audio/latin/tragopogon_orientalis_lat.mp3",
@@ -711,7 +711,7 @@ const flowersData = [
     },
     {
         id: 42, 
-        name_ar: "الشَّيْخَة الشَّائِعَة (مُرِير / جُلَيْجُوان / شِيخَة الأَرْض)",
+        name_ar: "الشَّيْخَة الشَّائِعَة (شِيخَة الأَرْض)",
         scientific_name: "Senecio vulgaris",
         audio_ar: "audio/arabic/senecio_vulgaris_ar.mp3",
         audio_lat: "audio/latin/senecio_vulgaris_lat.mp3",
