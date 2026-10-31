@@ -11,17 +11,17 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور الأوراق المخملية الموشاة", 
-                img_path: "images/cyclamen_persicum_st1.jpg", 
+                img_path: "images/cyclamen_persicum_st1.png", 
                 is_primary: false 
             },
             { 
                 stage_name: "طور التزهير تحت ظلال السنديان", 
-                img_path: "images/cyclamen_persicum_st2.jpg", 
+                img_path: "images/cyclamen_persicum_st2.png", 
                 is_primary: false 
             },
             { 
                 stage_name: "طور التفتح الكامل وسط الأعشاب", 
-                img_path: "images/cyclamen_persicum_st3.jpg", 
+                img_path: "images/cyclamen_persicum_st3.png", 
                 is_primary: true 
             }
         ]
@@ -38,12 +38,12 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور التزهير الكامل (الزهرة الفراشية الأرجوانية)", 
-                img_path: "images/vicia_sativa_st1.jpg", 
+                img_path: "images/vicia_sativa_st1.png", 
                 is_primary: true 
             },
             { 
                 stage_name: "طور النمو الخضري وظهور المحاليق المتسلقة وسط الأعشاب", 
-                img_path: "images/vicia_sativa_st2.jpg", 
+                img_path: "images/vicia_sativa_st2.png", 
                 is_primary: false 
             }
         ]
@@ -56,7 +56,7 @@ const flowersData = [
         audio_lat: "audio/latin/trifolium_purpureum_lat.mp3",
         season: "أوج الربيع (آذار - أيار)",
         environment: "المراعي الجبلية المفتوحة، حقول القمح، وجوانب التلال البرية",
-        image: "images/trifolium_purpureum.jpg",
+        image: "images/trifolium_purpureum.png",
         story: "زهرة برية ملفتة للنظر تنتمي لعائلة البقوليات، وتتميز برأسها الزهري المخروطي أو المستطيل الفاخر. النورة محاطة بشعيرات حريرية ناعمة جداً تحمي الزهيرات الأرجوانية الصغيرة من الجفاف وأشعة الشمس الساخنة، وتعتبر من المصادر الأساسية لرحيق النحل البري في منتصف فصل الربيع."
     },
     {
@@ -67,7 +67,7 @@ const flowersData = [
         audio_lat: "audio/latin/anacamptis_pyramidalis_lat.mp3",
         season: "منتصف الربيع (آذار - أيار)",
         environment: "المنحدرات الكلسية، المروج الجبلية المشمسة، والأحراج المفتوحة",
-        image: "images/anacamptis_pyramidalis.jpg",
+        image: "images/anacamptis_pyramidalis.png",
         story: "أحد أبهى وأنقى أنواع الأوركيد البري المحلي. يتميز بنورة زهرية ممتلئة تتخذ شكلاً هرمياً دقيقاً يتدرج لونه من الوردي الفاتح إلى البنفسجي المخملي. تفرز هذه الزهرة الفاتنة رائحة عطرية حلوة في ساعات النهار لجذب الفراشات والملقحات، وهي محمية بيئياً لمنع تعرضها للانقراض."
     },
     {
@@ -78,7 +78,7 @@ const flowersData = [
         audio_lat: "audio/latin/campanula_rapunculus_lat.mp3",
         season: "أواخر الربيع ومطلع الصيف (نيسان - حزيران)",
         environment: "الشقوق الصخرية الظليلة، التلال المرتفعة، وحواف الغابات الجبلية",
-        image: "images/campanula_rapunculus.jpg",
+        image: "images/campanula_rapunculus.png",
         story: "زهرة برية رشيقة شاهقة الارتفاع تنمو بشكل عمودي يحاكي السنبلة الممتدة. تتوزع عليها بالتناوب أجراس صغيرة هادئة ذات لون بنفسجي لافندري فائق النعومة. تاريخياً، كانت جذور هذه النبتة وأوراقها الغنية بفيتامين سي تُستخدم في الوصفات الغذائية البرية القديمة في مناطق حوض البحر الأبيض المتوسط."
     },
     {
@@ -89,7 +89,7 @@ const flowersData = [
         audio_lat: "audio/latin/lathyrus_carthaginensis_lat.mp3",
         season: "الربيع المعتدل (آذار - أيار)",
         environment: "الأسيجة النباتية البرية، الشجيرات الكثيفة، وجوانب السلاسل الحجرية",
-        image: "images/lathyrus_carthaginensis.jpg",
+        image: "images/lathyrus_carthaginensis.png",
         story: "نبتة متسلقة ساحرة تستعين بمحاليقها الورقية الذكية للارتفاع فوق الأعشاب والشجيرات المجاورة بحثاً عن الضوء. تتميز بزهورها الوردية الرقيقة التي تشبه الفراشات الصغيرة في أول تفتحها، وتعتبر من العناصر البصرية الجذابة التي تضفي تبايناً لونياً بديعاً على الأسيجة النباتية."
     },
     {
@@ -104,12 +104,12 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور النمو البري العام للشجيرة العطرية", 
-                img_path: "images/cistus_creticus_st1.jpg", 
+                img_path: "images/cistus_creticus_st1.png", 
                 is_primary: true 
             },
             { 
                 stage_name: "لقطة مقربة ممتازة تظهر تجعد البتلات الخمس والقلب الشعاعي الذهبي", 
-                img_path: "images/cistus_creticus_st2.jpg", 
+                img_path: "images/cistus_creticus_st2.png", 
                 is_primary: false 
             }
         ]
@@ -122,7 +122,7 @@ const flowersData = [
         audio_lat: "audio/latin/helichrysum_sanguineum_lat.mp3",
         season: "أوج الربيع (آذار - أيار)",
         environment: "المنحدرات الجبلية الجافة، الصخور المشمسة، والتربة الفقيرة الكلسية",
-        image: "images/helichrysum_sanguineum.jpg",
+        image: "images/helichrysum_sanguineum.png",
         story: "من أثمن زهور الجبال الأيقونية التراثية. تتميز بسيقانها المكسوة بوبر صوفي كثيف بلون فضي لحمايتها من تبخر المياه، ورؤوسها الزهرية الحمراء القرمزية الشمعية القاسية التي لا تذبل أو تفقد لونها الدموي الجذاب حتى بعد قطفها وتجفيفها لسنوات، ولذلك سميت بزهرة الخلود."
     },
     {
@@ -137,7 +137,7 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور استطالة السيقان والترتيب الورقي المتقابل", 
-                img_path: "images/hypericum_triquetrifolium_st1.jpg", 
+                img_path: "images/hypericum_triquetrifolium_st1.png", 
                 is_primary: true 
             }
         ]
@@ -150,7 +150,7 @@ const flowersData = [
         audio_lat: "audio/latin/urospermum_picroides_lat.mp3",
         season: "الربيع ومطلع الصيف (آذار - حزيران)",
         environment: "المنحدرات الجبلية المشمسة، التربة الصخرية، وجوانب الحقول المهملة",
-        image: "images/urospermum_picroides.jpg",
+        image: "images/urospermum_picroides.png",
         story: "زهرة برية مبهجة قوية الاحتمال تنتمي للعائلة النجمية (Asteraceae). تتميز برؤوسها الزهرية الصفراء الفاقعة المشعة كقرص الشمس وسط الصخور، وبراعمها المخروطية المحاطة بقنابات ذات خطوط وشعيرات كثيفة تحمي الزهرة قبل التفتح الكامل في الصباح الباكر."
     },
     {
@@ -165,12 +165,12 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور التزهير المبكر وظهور البتلات الفراشية الصفراء", 
-                img_path: "images/calicotome_villosa_st1.jpg", 
+                img_path: "images/calicotome_villosa_st1.png", 
                 is_primary: true 
             },
             { 
                 stage_name: "طور النمو الخضري المتقدم والأوراق ثلاثية الوريقات والأشواك الحادة", 
-                img_path: "images/calicotome_villosa_st2.jpg", 
+                img_path: "images/calicotome_villosa_st2.png", 
                 is_primary: false 
             }
         ]
@@ -183,7 +183,7 @@ const flowersData = [
         audio_lat: "audio/latin/lathyrus_sphaericus_lat.mp3",
         season: "أوج الربيع (نيسان - أيار)",
         environment: "المراعي العشبية الكثيفة، والتلال الجبلية وسط السنابل والنباتات البرية",
-        image: "images/lathyrus_sphaericus.jpg",
+        image: "images/lathyrus_sphaericus.png",
         story: "زهرة برية مميزة للغاية ونادرة التدرج اللوني في بيئتنا الجبلية الحلية. تتألق بتويجات صغيرة فريدة ذات لون برتقالي خوخي دافئ (المشمشي النادر)، تساهم بذكاء في دعم التنوع البيولوجي وحيوية التربة من خلال تثبيت المغذيات الطبيعية في الأرض الجبلية."
     },
     {
@@ -194,7 +194,7 @@ const flowersData = [
         audio_lat: "audio/latin/linum_pubescens_lat.mp3",
         season: "الربيع الممتد (آذار - أيار)",
         environment: "المراعي المشمسة، الهضاب العشبية المفتوحة والتربة الكلسية الجافة",
-        image: "images/linum_pubescens.jpg",
+        image: "images/linum_pubescens.png",
         story: "زهرة برية حَوْلية رقيقة وفاتنة جداً تنمو في مجموعات متناسقة تزين المروج العشبية المفتوحة. تتميز ببتلاتها الخمس الوردية الناعمة المتناظرة بدقة هندسية مذهلة، وينتهي عمق الزهرة بمركز أرجواني داكن مائل للزرقة يعمل كمرشد بصري للملقحات البرية."
     },
     {
@@ -205,7 +205,7 @@ const flowersData = [
         audio_lat: "audio/latin/geranium_molle_lat.mp3",
         season: "الربيع المعتدل (آذار - حزيران)",
         environment: "المنحدرات الظليلة، المروج العشبية الرطبة، وتحت ظلال الأشجار الحرجية",
-        image: "images/geranium_molle.jpg",
+        image: "images/geranium_molle.png",
         story: "نبتة عشبية برية لطيفة ومحبوبة جداً في التراث وعلم النبات المحلي. سُميت بإبرة الراعي بسبب الشكل الهندسي الفريد لثمارها الطولية المدببة التي تشبه الإبرة الطويلة بعد نضجها وسقوط البتلات الوردية المقصوصة الأطراف، ولها حضور لافت في المراعي العشبية الرطبة."
     },
     {
@@ -216,7 +216,7 @@ const flowersData = [
         audio_lat: "audio/latin/cruciata_pedemontana_lat.mp3",
         season: "أوج الربيع ومطلع الصيف (نيسان - حزيران)",
         environment: "التربة الصخرية الكلسية، بجانب شجيرات العليق، والمراعي المفتوحة",
-        image: "images/cruciata_pedemontana.jpg",
+        image: "images/cruciata_pedemontana.png",
         story: "نبتة عشبية برية متميزة بنموها الكثيف على هيئة تجمعات أو مظلات قطنية بيضاء فخمة. تتألف نورتها المركبة من مئات الأزهار النجمية الرباعية البتلات والدقيقة جداً، المتراصة بدقة هندسية ساحرة تعكس تباينات بصرية فائقة النقاء وسط المنحدرات الجبلية."
     },
     {
@@ -227,7 +227,7 @@ const flowersData = [
         audio_lat: "audio/latin/centaurea_cyanoides_lat.mp3",
         season: "أواخر الربيع ومطلع الصيف (أيار - أيلول)",
         environment: "المراعي الجبلية المفتوحة، جوانب الطرق البرية، والمنحدرات الجبلية المشمسة",
-        image: "images/centaurea_cyanoides.jpg",
+        image: "images/centaurea_cyanoides.png",
         story: "زهرة برية جذابة وساحرة تنتمي للعائلة النجمية، وتتميز برؤوسها الزهرية المستديرة المليئة بالبتلات الخيطية البنفسجية المشعة كالنجمة وسط الأعشاب الطويلة الجافة. تعتبر هذه الزهرة من أواخر علامات إزهار الربيع في الميدان الجبلي، وتتحمل درجات الحرارة المرتفعة بكفاءة."
     },
     {
@@ -238,7 +238,7 @@ const flowersData = [
         audio_lat: "audio/latin/pallenis_spinosa_lat.mp3",
         season: "مطلع الصيف وأوجه (أيار - تموز)",
         environment: "المنحدرات الجافة، الأراضي الصخرية الكلسية المكشوفة، وجوانب المسالك الجبلية المشمسة",
-        image: "images/pallenis_spinosa.jpg",
+        image: "images/pallenis_spinosa.png",
         story: "نبتة عشبية برية حولية صلبة تنتمي للفصيلة النجمية، وتشتهر بقدرتها الفائقة على تحمل الجفاف الهضابي. تتميز بنورتها الذهبية المشرقة المحاطة بصفين من البتلات الصفراء الشعاعية، يتوجها إطار هندسي فريد من الأوراق الخضراء الصلبة والمستدقة بنهايات شوكية حادة تحمي قلب الزهرة، لتبدو كالنجمة المتوهجة وسط بيئتها الجبلية الجافة."
     },
     {
@@ -253,12 +253,12 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "التنوع اللوني البرتقالي الكلاسيكي (var. arvensis)", 
-                img_path: "images/anagallis_arvensis_arvensis.jpg", 
+                img_path: "images/anagallis_arvensis_arvensis.png", 
                 is_primary: true 
             },
             { 
                 stage_name: "التنوع اللوني الأزرق النيلي النادر (var. caerulea)", 
-                img_path: "images/anagallis_arvensis_caerulea.jpg", 
+                img_path: "images/anagallis_arvensis_caerulea.png", 
                 is_primary: false 
             }
         ]
@@ -275,12 +275,12 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور التزهير المقرب والمكتمل للبتلات البيضاء والقرص الذهبي", 
-                img_path: "images/anthemis_arvensis_st1.jpg", 
+                img_path: "images/anthemis_arvensis_st1.png", 
                 is_primary: true 
             },
             { 
                 stage_name: "طور الإثمار المتأخر وسقوط البتلات الشعاعية البيضاء", 
-                img_path: "images/anthemis_arvensis_st2.jpg", 
+                img_path: "images/anthemis_arvensis_st2.png", 
                 is_primary: false 
             }
         ]
@@ -297,12 +297,12 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور التزهير الأصفر النجمي الكامل والأوراق الأنبوبية", 
-                img_path: "images/asphodeline_lutea_st1.jpg", 
+                img_path: "images/asphodeline_lutea_st1.png", 
                 is_primary: true 
             },
             { 
                 stage_name: "طور الإثمار المتقدم وجفاف الكبسولات المغزلية البرتقالية", 
-                img_path: "images/asphodeline_lutea_st2.jpg", 
+                img_path: "images/asphodeline_lutea_st2.png", 
                 is_primary: false 
             }
         ]
@@ -319,12 +319,12 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور السيقان الطرية (القطاف والطهي)", 
-                img_path: "images/cynara_cardunculus_st1.jpg",
+                img_path: "images/cynara_cardunculus_st1.png",
                 is_primary: true 
             },
             { 
                 stage_name: "طور التزهير الشوكي (الزهرة البنفسجية)", 
-                img_path: "images/cynara_cardunculus_st2.jpg", 
+                img_path: "images/cynara_cardunculus_st2.png", 
                 is_primary: false 
             }
         ]
@@ -337,7 +337,7 @@ const flowersData = [
         audio_lat: "audio/latin/trifolium_stellatum_lat.mp3",
         season: "كامل الربيع ومطلع الصيف (آذار - حزيران)",
         environment: "المراعي العشبية الجافة، شقوق الصخر الكلسي، والمنحدرات الجبلية المشمسة",
-        image: "images/trifolium_stellatum.jpg",
+        image: "images/trifolium_stellatum.png",
         story: "نبتة عشبية برية صغيرة تنتمي للفصيلة البقولية، وتعتبر من ألطف أزهار المنحدرات الجبلية. تتفتح أولاً ككرات زهرية فروية ناعمة ذات لمسات وردية وبيضاء، وعند النضج والجفاف، تتسع كؤوسها لتتحول إلى نجوم خماسية الأطراف ذات لون وردي مخملي ساحر يحمل في وسطه البذور. يمنحها هذا التحول الهندسي الفريد مظهراً غاية في الجمال والتميز بين الأعشاب البرية."
     },
     {
@@ -350,8 +350,8 @@ const flowersData = [
         environment: "التربة الحصوية، المنحدرات الكلسية بجانب الصخور, والمراعي الجبلية الرطبة",
         story: "نبتة عشبية برية زاحفة معمرة تنتمي للفصيلة البقولية. تشتهر بأوراقها الخضراء المكونة من ثلاث وريقات بيضاوية دقيقة، وتنتج رؤوساً زهرية كروية مضغوطة ذات لون وردي أرجواني ناعم مخملي. تمتلك قدرة رائعة على التمدد والفرش فوق التربة الفقيرة والحصوية الكلسية بين شقوق الصخور، مما يساهم في تثبيت التربة الجبلية وإغنائها طبيعياً بالتناغم مع النباتات المجاورة.",
         growth_stages: [
-            { stage_name: "الطور المخملي الرطب", img_path: "images/trifolium_resupinatum_st1.jpg", is_primary: true },
-            { stage_name: "طور تماثل الحقول النجمي", img_path: "images/trifolium_resupinatum_st2.jpg", is_primary: false }
+            { stage_name: "الطور المخملي الرطب", img_path: "images/trifolium_resupinatum_st1.png", is_primary: true },
+            { stage_name: "طور تماثل الحقول النجمي", img_path: "images/trifolium_resupinatum_st2.png", is_primary: false }
         ]
     },
     {
@@ -362,7 +362,7 @@ const flowersData = [
         audio_lat: "audio/latin/papaver_hybridum_lat.mp3",
         season: "أوائل الربيع إلى منتصفه (آذار - أيار)",
         environment: "الحقول العشبية المفتوحة، جوانب مسالك الأحراج، والمنحدرات الجبلية قليلة الصخور",
-        image: "images/papaver_hybridum.jpg",
+        image: "images/papaver_hybridum.png",
         story: "نبتة برية حولية رقيقة وشهيرة تنتمي للفصيلة الخشخاشية، وتعد من أروع علامات حيوية الربيع الجبلي. تتألق ببتلاتها الأربع الحريرية ذات اللون الأحمر الناري الفاتن، وتتفرد بوجود بقع داكنة سوداء مخملية ومحددة بدقة عند قاعدة كل بتلة تحيط بمركز مآبرها الدقيقة. تتمايل سيقانها الوبرية النحيلة بخفة مع النسمات البرية، لتضفي لمسات لونية دافئة وتناقضاً بصرياً مذهلاً وسط بساط الحقول الأخضر."
     },
     {
@@ -373,17 +373,17 @@ const flowersData = [
         audio_lat: "audio/latin/papaver_rhoeas_lat.mp3",
         season: "أوج الربيع (آذار - أيار)",
         environment: "الحقول المفتوحة، المراعي العشبية المشمسة، وجوانب الطرقات والمسالك الجبلية في العزونية",
-        image: "images/papaver_rhoeas.jpg",
+        image: "images/papaver_rhoeas.png",
         story: "نبتة برية حولية ساحرة تنتمي للفصيلة الخشخاشية، وتعتبر الرمز الأشهر لجمال وحيوية السهول الربيعية. تتميز ببتلاتها الأربع الحريرية الرقيقة ذات اللون الأحمر القاني الصافي والناصع، والتي تحيط بمركز غني بالمآبر الداكنة المتراصة. ترتفع أزهارها فوق سيقان وبرية نحيلة ومرنة تتمايل بمرونة مع نسمات الرياح، مغطيةً الحقول ببساط أحمر متوهج يبعث البهجة والدفء في الطبيعة.",
         growth_stages: [
             { 
                 stage_name: "طور تشكل البراعم الوبرية الكثيفة المنحنية قبل التفتح", 
-                img_path: "images/papaver_rhoeas_st1.jpg", 
+                img_path: "images/papaver_rhoeas_st1.png", 
                 is_primary: false 
             },
             { 
                 stage_name: "طور التزهير الكامل والبتلات الحريرية الحمراء المتوهجة", 
-                img_path: "images/papaver_rhoeas_st2.jpg", 
+                img_path: "images/papaver_rhoeas_st2.png", 
                 is_primary: true 
             }
         ]
@@ -400,7 +400,7 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور التزهير الأصفر والتعايش البيئي الصخري", 
-                img_path: "images/scrophularia_peregrina_st1.jpg", 
+                img_path: "images/scrophularia_peregrina_st1.png", 
                 is_primary: true 
             }
         ]
@@ -413,7 +413,7 @@ const flowersData = [
         audio_lat: "audio/latin/centaurea_ibérica_lat.mp3",
         season: "أواخر الربيع ومطلع الصيف (أيار - تموز)",
         environment: "المراعي الجبلية المفتوحة، الأراضي الحصوية الجافة، وجوانب المسالك الصخرية المشمسة",
-        image: "images/centaurea_ibérica.jpg",
+        image: "images/centaurea_ibérica.png",
         story: "نبتة عشبية برية شوكية صلبة تنتمي للفصيلة النجمية (جنس المرّار)، وتعتبر من أكثر نباتات المفتوحات قدرة على حماية نفسها. تتفرد بنشوء رؤوس زهرية يطوقها طوق هندسي دفاعي من الأشواك المستقيمة الطويلة والحادة ذات اللون الأرجواني أو الوردي القرمزي الساحر الذي يتناقض بقوة مع اخضرار أوراقها الممتدة. تضفي هذه الأشواك الملونة هيبة بصرية فريدة على قمم السيقان وسط الأعشاب الجبلية الجافة."
     },
     {
@@ -428,22 +428,22 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور النمو الخضري (الوردة الرأسية الأرضية)", 
-                img_path: "images/centaurea_calcitrapa_st1.jpg", 
+                img_path: "images/centaurea_calcitrapa_st1.png", 
                 is_primary: false 
             },
             { 
                 stage_name: "طور استطالة الساق المتقدم والتسنن الشوكي", 
-                img_path: "images/centaurea_calcitrapa_st2.jpg", 
+                img_path: "images/centaurea_calcitrapa_st2.png", 
                 is_primary: true 
             },
             { 
                 stage_name: "طور التفرع الشوكي قبل التزهير", 
-                img_path: "images/centaurea_calcitrapa_st3.jpg", 
+                img_path: "images/centaurea_calcitrapa_st3.png", 
                 is_primary: false 
             },
             { 
                 stage_name: "طور التفرع الكثيف واشتداد الأشواك الورقية", 
-                img_path: "images/centaurea_calcitrapa_st4.jpg", 
+                img_path: "images/centaurea_calcitrapa_st4.png", 
                 is_primary: true 
             }
         ]
@@ -460,12 +460,12 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور التزهير المبكر (البتلات البيضاء)", 
-                img_path: "images/silene_vulgaris_st1.jpg", 
+                img_path: "images/silene_vulgaris_st1.png", 
                 is_primary: false 
             },
             { 
                 stage_name: "طور الكؤوس المنتفخة (المصابيح الورقية)", 
-                img_path: "images/silene_vulgaris_st2.jpg", 
+                img_path: "images/silene_vulgaris_st2.png", 
                 is_primary: true 
             }
         ]
@@ -482,7 +482,7 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور النمو الخضري المبكر (الأوراق الوبرية)", 
-                img_path: "images/daucus_carota_st1.jpg", 
+                img_path: "images/daucus_carota_st1.png", 
                 is_primary: true 
             }
         ]
@@ -499,7 +499,7 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور الكتلة الخضرية وبدء الاستنبال", 
-                img_path: "images/piptatherum_miliaceum_st1.jpg", 
+                img_path: "images/piptatherum_miliaceum_st1.png", 
                 is_primary: true 
             }
         ]
@@ -516,7 +516,7 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور السنابل الخضراء المكتملة والأشواك الإبرية", 
-                img_path: "images/aegilops_triuncialis_st1.jpg", 
+                img_path: "images/aegilops_triuncialis_st1.png", 
                 is_primary: true 
             }
         ]
@@ -533,7 +533,7 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور التشعب الخضري الكثيف وبدء التسنن الورقي", 
-                img_path: "images/ononis_antiquorum_st1.jpg", 
+                img_path: "images/ononis_antiquorum_st1.png", 
                 is_primary: true 
             }
         ]
@@ -550,12 +550,12 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور الكعوب الأرضية الغضة (مرحلة القطاف والتنظيف)", 
-                img_path: "images/gundelia_tournefortii_st1.jpg", 
+                img_path: "images/gundelia_tournefortii_st1.png", 
                 is_primary: false 
             },
             { 
                 stage_name: "طور التزهير العمودي والتحول الشوكي الكامل", 
-                img_path: "images/gundelia_tournefortii_st2.jpg", 
+                img_path: "images/gundelia_tournefortii_st2.png", 
                 is_primary: true 
             }
         ]
@@ -572,12 +572,12 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور النمو الخضري والأوراق Mمبرقشة", 
-                img_path: "images/silybum_marianum_st1.jpg", 
+                img_path: "images/silybum_marianum_st1.png", 
                 is_primary: false 
             },
             { 
                 stage_name: "طور التزهير البنفسجي الكامل (جذب الملقحات)", 
-                img_path: "images/silybum_marianum_st2.jpg", 
+                img_path: "images/silybum_marianum_st2.png", 
                 is_primary: true 
             }
         ]
@@ -594,12 +594,12 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "المظهر العام للمظلة الشجرية (البيئة الطبيعية والدروب)", 
-                img_path: "images/quercus_calliprinos_st1.jpg", 
+                img_path: "images/quercus_calliprinos_st1.png", 
                 is_primary: true 
             },
             { 
                 stage_name: "تفاصيل الأوراق الكثيفة وهيكل الأغصان", 
-                img_path: "images/quercus_calliprinos_st2.jpg", 
+                img_path: "images/quercus_calliprinos_st2.png", 
                 is_primary: false 
             }
         ]
@@ -616,7 +616,7 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور العناقيد الثمرية الخضراء (ما بعد التزهير)", 
-                img_path: "images/arum_palaestinum_field.jpg", 
+                img_path: "images/arum_palaestinum_field.png", 
                 is_primary: true 
             }
         ]
@@ -633,17 +633,17 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور البراعم الخضراء المغلقة (قبل التزهير)", 
-                img_path: "images/tragopogon_orientalis_st1.jpg", 
+                img_path: "images/tragopogon_orientalis_st1.png", 
                 is_primary: false 
             },
             { 
                 stage_name: "طور التزهير الشمسي (البتلات الصفراء)", 
-                img_path: "images/tragopogon_orientalis_st2.jpg", 
+                img_path: "images/tragopogon_orientalis_st2.png", 
                 is_primary: false 
             },
             { 
                 stage_name: "طور انتشار البذور (المظلات القطنية الهوائية)", 
-                img_path: "images/tragopogon_orientalis_st3.jpg", 
+                img_path: "images/tragopogon_orientalis_st3.png", 
                 is_primary: true 
             }
         ]
@@ -660,12 +660,12 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور النمو الخضري والأغصان الشوكية المتشابكة", 
-                img_path: "images/rubus_sanctus_st1.jpg", 
+                img_path: "images/rubus_sanctus_st1.png", 
                 is_primary: true 
             },
             { 
                 stage_name: "طور التزهير وعقد الثمار الصيفية (البلاكبيري البري)", 
-                img_path: "images/rubus_sanctus_st2.jpg", 
+                img_path: "images/rubus_sanctus_st2.png", 
                 is_primary: false 
             }
         ]
@@ -682,12 +682,12 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور النمو الخضري والأوراق الراحية", 
-                img_path: "images/malva_sylvestris_st1.jpg", 
+                img_path: "images/malva_sylvestris_st1.png", 
                 is_primary: true 
             },
             { 
                 stage_name: "طور التزهير البنفسجي وعقد الثمار (الخبيزات الصغيرة)", 
-                img_path: "images/malva_sylvestris_st2.jpg", 
+                img_path: "images/malva_sylvestris_st2.png", 
                 is_primary: false 
             }
         ]
@@ -704,7 +704,7 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "المظهر العام للشجرة والتاج الخضري الكامل", 
-                img_path: "images/quercus_brantii_st1.jpg", 
+                img_path: "images/quercus_brantii_st1.png", 
                 is_primary: true
             }
         ]
@@ -721,7 +721,7 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور البراعم والكرة القطنية لنضج وانتشار البذور", 
-                img_path: "images/senecio_vulgaris_st1.jpg", 
+                img_path: "images/senecio_vulgaris_st1.png", 
                 is_primary: true 
             }
         ]
@@ -738,7 +738,7 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "المظهر العام للشجيرة والنمو الخضري الكثيف للأوراق الإبرية", 
-                img_path: "images/salvia_rosmarinus_st2.jpg", 
+                img_path: "images/salvia_rosmarinus_st2.png", 
                 is_primary: true 
             }
         ]
@@ -755,12 +755,12 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "المظهر العام للنبات الشاهق وسط المراعي الجبلية المفتوحة", 
-                img_path: "images/foeniculum_vulgare_st1.jpg", 
+                img_path: "images/foeniculum_vulgare_st1.png", 
                 is_primary: true 
             },
             { 
                 stage_name: "طور التزهير الكامل وظهور المظلات الزهرية الصفراء المفتوحة",
-                img_path: "images/foeniculum_vulgare_st2.jpg", 
+                img_path: "images/foeniculum_vulgare_st2.png", 
                 is_primary: false 
             }
         ]
@@ -777,7 +777,7 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور النمو الخضري وظهور الأوراق السهمية اللامعة المتسلقة", 
-                img_path: "images/dioscorea_communis_st1.jpg", 
+                img_path: "images/dioscorea_communis_st1.png", 
                 is_primary: true 
             }
         ]
@@ -794,7 +794,7 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "الطور المتقدم واكتمال نمو السنابل البرية ذات السفا الإبرية الطويلة", 
-                img_path: "images/hordeum_murinum_st2.jpg", 
+                img_path: "images/hordeum_murinum_st2.png", 
                 is_primary: true 
             }
         ]
@@ -811,7 +811,7 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور التزهير المبكر واكتساء أطراف الشجيرة بالأزهار الفنجانية المصفرّة", 
-                img_path: "images/euphorbia_acanthothamnos_st1.jpg", 
+                img_path: "images/euphorbia_acanthothamnos_st1.png", 
                 is_primary: true 
             }
         ]
@@ -828,7 +828,7 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور النمو الخضري المتقدم والأوراق المخملية الفضية الفواحة", 
-                img_path: "images/salvia_fruticosa_st2.jpg", 
+                img_path: "images/salvia_fruticosa_st2.png", 
                 is_primary: true 
             }
         ]
@@ -845,7 +845,7 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور التزهير الكامل والامتداد الزاحف على التربة الحصوية", 
-                img_path: "images/convolvulus_arvensis_st1.jpg", 
+                img_path: "images/convolvulus_arvensis_st1.png", 
                 is_primary: true 
             }
         ]
@@ -862,7 +862,7 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور تشكل البراعم الوبرية المتدلية قبل تفتح البتلات الحمراء", 
-                img_path: "images/papaver_rhoeas_st1.jpg", 
+                img_path: "images/papaver_rhoeas_st1.png", 
                 is_primary: true 
             }
         ]
@@ -879,7 +879,7 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور نضوج السنابل النحيلة وتحولها للون الأرجواني الصيفي", 
-                img_path: "images/bromus_madritensis_st1.jpg", 
+                img_path: "images/bromus_madritensis_st1.png", 
                 is_primary: true 
             }
         ]
@@ -896,7 +896,7 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور تشكل القرون البذرية القرصية الحلزونية فوق الحصى", 
-                img_path: "images/medicago_orbicularis_st1.jpg", 
+                img_path: "images/medicago_orbicularis_st1.png", 
                 is_primary: true 
             }
         ]
@@ -913,7 +913,7 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور نضوج القرون البذرية الأسطوانية الطويلة وسط المنحدر الحصوي", 
-                img_path: "images/arabis_turrita_st1.jpg", 
+                img_path: "images/arabis_turrita_st1.png", 
                 is_primary: true 
             }
         ]
@@ -930,7 +930,7 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور التزهير الكامل والأوراق الراحية العميقة الفصوص", 
-                img_path: "images/malva_alcea_st1.jpg", 
+                img_path: "images/malva_alcea_st1.png", 
                 is_primary: true 
             }
         ]
@@ -947,7 +947,7 @@ const flowersData = [
         growth_stages: [
             { 
                 stage_name: "طور تشكل الأبراج والشماريخ الزهرية المخروطية الفضية (Italian Bugloss)", 
-                img_path: "images/echium_italicum_st1.jpg", 
+                img_path: "images/echium_italicum_st1.png", 
                 is_primary: true 
             }
         ]
